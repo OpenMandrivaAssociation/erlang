@@ -3,63 +3,65 @@
 %{expand: %{?_with_java: %%global build_java 1}}
 %{expand: %{?_without_java: %%global build_java 0}}
 
-%define erts_version 5.5.4
-%define edoc_version 0.7.2
-%define appmon_version 2.1.8
-%define asn1_version 1.4.4.14
-%define compiler_version 4.4.4
-%define cosEvent_version 2.1
-%define cosEventDomain_version 1.1
-%define cosFileTransfer_version 1.1.2
-%define cosNotification_version 1.1.4
-%define cosProperty_version 1.1.2
-%define cosTime_version 1.1
-%define cosTransactions_version 1.2.1
-%define crypto_version 1.5.1
-%define debugger_version 3.1.1
-%define dialyzer_version 1.6.0
+%define erts_version 5.5.5
+%define appmon_version 2.1.9
+%define asn1_version 1.4.5
+%define compiler_version 4.4.5
+%define cosEvent_version 2.1.1
+%define cosEventDomain_version 1.1.1
+%define cosFileTransfer_version 1.1.3
+%define cosNotification_version 1.1.5
+%define cosProperty_version 1.1.4
+%define cosTime_version 1.1.1
+%define cosTransactions_version 1.2.2
+%define crypto_version 1.5.1.1
+%define debugger_version 3.1.1.1
+%define dialyzer_version 1.7.0
+#new
+%define docbuilder_version 0.9
+%define edoc_version 0.7.3
 %define erl_interface_version 3.5.5.3
-%define et_version 1.0
-%define gs_version 1.5.6
-%define hipe_version 3.6.2
-%define ic_version 4.2.12
-%define inets_version 4.7.11
-%define inviso_version 0.2.1
-%define kernel_version 2.11.4
-%define megaco_version 3.5.3
-%define mnemosyne_version 1.2.7
-%define mnesia_version 4.3.4
-%define mnesia_session_version 1.1.6
-%define observer_version 0.9.7.3
-%define orber_version 3.6.5
-%define odbc_version 2.0.7
-%define os_mon_version 2.1.2
-%define otp_mibs_version 1.0.4
-%define parsetools_version 1.4.1
-%define pman_version 2.5.3
-%define runtime_tools_version 1.6.5
-%define sasl_version 2.1.5
-%define snmp_version 4.9.2
-%define ssh_version 0.9.9
-%define ssl_version 3.1
-%define stdlib_version 1.14.4
+%define et_version 1.0.0.1
+%define gs_version 1.5.7
+%define hipe_version 3.6.3
+%define ic_version 4.2.13
+%define inets_version 4.7.16
+%define inviso_version 0.4
+%define kernel_version 2.11.5
+%define megaco_version 3.6.0.1
+%define mnemosyne_version 1.2.7.1
+%define mnesia_version 4.3.5
+%define mnesia_session_version 1.1.6.1
+%define observer_version 0.9.7.4
+%define odbc_version 2.0.8
+%define orber_version 3.6.6
+%define os_mon_version 2.1.2.1
+%define otp_mibs_version 1.0.4.1
+%define parsetools_version 1.4.1.1
+%define pman_version 2.6
+%define runtime_tools_version 1.6.6
+%define sasl_version 2.1.5.1
+%define snmp_version 4.9.3
+%define ssh_version 0.9.9.1
+%define ssl_version 3.1.1.1
+%define stdlib_version 1.14.5
 %define syntax_tools_version 1.5.3
-%define toolbar_version 1.3
-%define tools_version 2.5.4
-%define typer_version 0.1.0
-%define tv_version 2.1.4
-%define webtool_version 0.8.3
-%define xmerl_version 1.1.2
+%define toolbar_version 1.3.0.1
+%define tools_version 2.5.5
+%define tv_version 2.1.4.1
+%define typer_version 0.1.0.1
+%define webtool_version 0.8.3.1
+%define xmerl_version 1.1.4
 %if %build_java
 %define jinterface_version 1.3
 %endif
 
 %define erlang_libdir %{_libdir}/erlang/lib
-%define realver R11B-4
+%define realver R11B-5
 
 Name:		erlang
 Version:	R11B
-Release:	%mkrel 6
+Release:	%mkrel 7
 Summary:	General-purpose programming language and runtime environment
 Group:		Development/Other
 License:	MPL style
@@ -809,7 +811,6 @@ rm -rf %{buildroot}
 %{_libdir}/erlang/COPYRIGHT
 %{_libdir}/erlang/PR.template
 %{_libdir}/erlang/README
-
 %{_libdir}/erlang/bin/run_erl
 %{_libdir}/erlang/bin/start
 %{_libdir}/erlang/bin/start_erl
