@@ -17,7 +17,6 @@
 %define crypto_version 1.5.1.1
 %define debugger_version 3.1.1.1
 %define dialyzer_version 1.7.0
-#new
 %define docbuilder_version 0.9
 %define edoc_version 0.7.3
 %define erl_interface_version 3.5.5.3
@@ -75,7 +74,6 @@ Patch2:		otp-rpath.patch
 Patch3:		otp-sslrpath.patch
 Patch5:		otp-run_erl.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
-
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel
 BuildRequires:	unixODBC-devel
@@ -85,8 +83,8 @@ BuildRequires:	tk-devel
 BuildRequires:	java-1.4.2-gcj-compat-devel
 %endif
 BuildRequires:	flex
-
 Requires:	tk
+Requires:	tcl
 
 %description 
 Erlang is a general-purpose programming language and runtime
@@ -111,6 +109,7 @@ Requires:	erlang-cosTransactions
 Requires:	erlang-crypto
 Requires:	erlang-debugger
 Requires:	erlang-dialyzer
+Requires:	erlang-docbbuilder
 Requires:	erlang-edoc
 Requires:	erlang-erl_interface
 Requires:	erlang-et
@@ -185,7 +184,6 @@ Group:		Development/Other
 %description -n %{name}-devel
 Erlang headers.
 This package is used to build some library.
-
 
 %package -n %{name}-manpages
 Summary:	Erlang man pages
@@ -280,7 +278,6 @@ Group:		Development/Other
 The cosEvent application is an Erlang implementation of a CORBA Service
 CosEvent.
 
-
 %package -n %{name}-cosEventDomain
 Summary:	Orber OMG Event Domain Service
 License:	MPL-like
@@ -292,7 +289,6 @@ Group:		Development/Other
 The cosEventDomain application is an Erlang implementation of a CORBA
 Service CosEventDomainAdmin.
 
-
 %package -n %{name}-cosFileTransfer
 Summary:	Orber OMG File Transfer Service
 License:	MPL-like
@@ -303,7 +299,6 @@ Group:		Development/Other
 %description -n %{name}-cosFileTransfer
 The cosFileTransfer Application is an Erlang implementation of the
 OMG CORBA File Transfer Service.
-
 
 %package -n %{name}-cosNotification
 Summary:	Orber OMG Notification Service
@@ -327,7 +322,6 @@ Group:		Development/Other
 The cosProperty Application is an Erlang implementation of the OMG
 CORBA Property Service.
 
-
 %package -n %{name}-cosTime
 Summary:	Orber OMG Timer and TimerEvent Services
 License:	MPL-like
@@ -338,7 +332,6 @@ Group:		Development/Other
 %description -n %{name}-cosTime
 The cosTime application is an Erlang implementation of the OMG
 CORBA Time and TimerEvent Services.
-
 
 %package -n %{name}-cosTransactions
 Summary:	Orber OMG Transaction Service
@@ -351,7 +344,6 @@ Group:		Development/Other
 The cosTransactions application is an Erlang implementation of the OMG
 CORBA Transaction Service.
 
-
 %package -n %{name}-crypto
 Summary:	Cryptographical support
 License:	MPL-like
@@ -361,7 +353,6 @@ Group:		Development/Other
 
 %description -n %{name}-crypto
 Cryptographical support for erlang.
-
 
 %package -n %{name}-debugger
 Summary:	A debugger for debugging and testing of Erlang programs
@@ -375,6 +366,15 @@ Debugger is a graphical tool which can be used for debugging and testing
 of Erlang programs. For example, breakpoints can be set, code can be single
 stepped and variable values can be displayed and changed.
 
+%package -n %{name}-docbuilder
+Summary:	A tool for generating HTML documentation for Erlang programs
+License:	MPL-like
+Requires:	erlang-base
+Provides:	docbuilder = %{docbuilder_version}
+Group:		Development/Other
+
+%description -n %{name}-docbuilder
+A tool for generating HTML documentation for Erlang programs.
 
 %package -n %{name}-erl_interface
 Summary:	Low level interface to C
@@ -384,8 +384,7 @@ Provides:	erl_interface = %{erl_interface_version}
 Group:		Development/Other
 
 %description -n %{name}-erl_interface
-Low level interface to C for erlang
-
+Low level interface to C for erlang.
 
 %package -n %{name}-et
 Summary:	Event Tracer
@@ -410,7 +409,6 @@ Group:		Development/Other
 The Graphics System application, GS, is a library of routines for writing
 graphical user interfaces. Programs written using GS work on all Erlang
 platforms and do not depend upon the underlying windowing system.
-
 
 %package -n %{name}-hipe
 Summary:	hipe
@@ -441,7 +439,6 @@ Group:		Development/Other
 
 %description -n %{name}-ic
 The IC application is an Erlang implementation of an IDL compiler.
-
 
 %package -n %{name}-inets
 Summary:	A set of services such as a Web server and a ftp client etc.
@@ -478,7 +475,6 @@ Group:		Development/Other
 Mnemosyne is a query interface to Mnesia. Mnemosyne is an extension of the
 Erlang language, i.e. queries are written embedded in Erlang code.
 
-
 %package -n %{name}-mnesia
 Summary:	A heavy duty real-time distributed database
 License:	MPL-like
@@ -490,7 +486,6 @@ Group:		Development/Other
 Mnesia is a distributed DataBase Management System (DBMS), appropriate for
 telecommunications applications and other Erlang applications which require
 continuous operation and exhibit soft real-time properties.
-
 
 %package -n %{name}-mnesia_session
 Summary:	A foreign language interface to Mnesia DBMS
@@ -505,8 +500,6 @@ programming languages (i.e. other languages than Erlang). The Mnesia_Session
 interface is defined in IDL (an Interface Definition Language standardized
 by OMG (the Object Management Group)).
 
-
-
 %package -n %{name}-observer
 Summary:	Observer, tools for tracing and investigation of distributed systems
 License:	MPL-like
@@ -517,7 +510,6 @@ Group:		Development/Other
 %description -n %{name}-observer
 The OBSERVER application contains tools for tracing and investigation of
 distributed systems.
-
 
 %package -n %{name}-odbc
 Summary: 	A interface to relational SQL-databases built on ODBC
@@ -541,7 +533,6 @@ Group:		Development/Other
 The Orber application is an Erlang implementation of a CORBA Object Request
 Broker.
 
-
 %package -n %{name}-os_mon
 Summary:	A monitor which allows inspection of the underlying operating system
 License:	MPL-like
@@ -553,17 +544,15 @@ Group:		Development/Other
 The operating system monitor OS_Mon monitors operating system disk and memory
 usage etc.
 
-
 %package -n %{name}-otp_mibs
-Summary:	otp_mibs
+Summary:	An snmp management information base for Erlang
 License:	MPL-like
 Requires:	erlang-base
 Provides:	otp_mibs = %{otp_mibs_version}
 Group:		Development/Other
 
 %description -n %{name}-otp_mibs
-otp_mibs
-
+The OTP_Mibs application provides an SNMP management information base for Erlang nodes.
 
 %package -n %{name}-parsetools
 Summary:	A set of parsing and lexical analysis tools
@@ -578,7 +567,6 @@ module. Yecc is an LALR-1 parser generator for Erlang, similar to yacc.
 Yecc takes a BNF grammar definition as input, and produces Erlang code for
 a parser as output.
 
-
 %package -n %{name}-pman
 Summary:	A process manager used to inspect the state of an Erlang system
 License:	MPL-like
@@ -591,7 +579,6 @@ The process manager Pman is a graphical tool used to inspect the Erlang
 processes executing either locally or on remote nodes. It is also possible
 to trace events in the individual processes.
 
-
 %package -n %{name}-runtime_tools
 Summary:	Runtime tools, tools to include in a production system
 License:	MPL-like
@@ -600,7 +587,7 @@ Provides:	runtime_tools = %{runtime_tools_version}
 Group:		Development/Other
 
 %description -n %{name}-runtime_tools
-Runtime tools, tools to include in a production system
+Runtime tools, tools to include in a production system.
 
 %package -n %{name}-snmp
 Summary:	Simple Network Management Protocol (SNMP) support
@@ -613,7 +600,6 @@ Group:		Development/Other
 A multilingual Simple Network Management Protocol Extensible Agent, featuring
 a MIB compiler and facilities for implementing SNMP MIBs etc.
 
-
 %package -n %{name}-ssh
 Summary:	Secure Shell application with ssh and sftp support
 License:	MPL-like
@@ -623,7 +609,6 @@ Group:		Development/Other
 
 %description -n %{name}-ssh
 Secure Shell application with ssh and sftp support.
-
 
 %package -n %{name}-ssl
 Summary:	An interface to UNIX BSD sockets with Secure Sockets Layer
@@ -659,7 +644,6 @@ Group:		Development/Other
 The Toolbar application simplifies access to the Erlang/OTP tools. It
 consists of a number of power buttons, one for each available tool.
 
-
 %package -n %{name}-tools
 Summary:	A set of programming tools including a coverage analyzer etc
 License:	MPL-like
@@ -671,17 +655,15 @@ Group:		Development/Other
 The Tools application contains a number of stand-alone tools, which are
 useful when developing Erlang programs.
 
-
 %package -n %{name}-typer
-Summary:	TypEr application
+Summary:	A type annotator of Erlang code
 License:	MPL-like
 Requires:	erlang-base
 Provides:	typer = %{typer_version}
 Group:		Development/Other
 
 %description -n %{name}-typer
-TypEr application.
-
+A type annotator of Erlang code.
 
 %package -n %{name}-tv
 Summary:	An ETS and MNESIA graphical table visualizer
@@ -694,7 +676,6 @@ Group:		Development/Other
 The TV application enables the user to examine ETS and Mnesia tables.
 Once a certain table has been opened in the tool, the content may be viewed
 in various levels of detail.
-
 
 %package -n %{name}-webtool
 Summary:	A tool that simplifying the use of web based Erlang tools
@@ -729,12 +710,29 @@ a few bugs in the scanner, and improves HTML export.
 %patch3 -p1 -b .sslrpath
 #%patch5 -p1 -b .run_erl
 
-
 %build
-./configure --prefix=%{_prefix} --exec-prefix=%{_prefix} --bindir=%{_bindir} --libdir=%{_libdir}  --enable-threads --enable-kernel-poll --enable-hipe
-chmod -R u+w .
-make
+export CFLAGS="%{optflags}"
+export CXXFLAGS="%{optflags}"
+export FFLAGS="%{optflags}"
 
+%if %mdkversion >= 200710
+export CFLAGS="$CFLAGS -fstack-protector"
+export CXXFLAGS="$CXXFLAGS -fstack-protector"
+export FFLAGS="$FFLAGS -fstack-protector"
+%endif
+
+./configure \
+	--prefix=%{_prefix} \
+	--exec-prefix=%{_prefix} \
+	--bindir=%{_bindir} \
+	--libdir=%{_libdir} \
+	--enable-threads \
+	--enable-kernel-poll \
+	--enable-hipe \
+	--enable-smp-support
+
+chmod -R u+w .
+%(echo %make|perl -pe 's/-j\d+/-j1/g')
 
 %install
 rm -rf %{buildroot}
@@ -753,7 +751,7 @@ tar -C erlang_doc -xjf %{SOURCE1}
 tar -C %{buildroot}%{_libdir}/erlang -xjf %{SOURCE2}
 
 # bzip2 manual
-cd %{buildroot}%{_libdir}/%name/man
+cd %{buildroot}%{_libdir}/%{name}/man
 for manfile in man1 man3 man4 man6
 do
 	bzip2 -9 $manfile/* >/dev/null 2>/dev/null
@@ -889,6 +887,10 @@ rm -rf %{buildroot}
 %files -n %{name}-debugger
 %defattr(-,root,root)
 %{erlang_libdir}/debugger-%{debugger_version}
+
+%files -n %{name}-docbuilder
+%defattr(-,root,root)
+%{erlang_libdir}/docbuilder-%{docbuilder_version}
 
 %files -n %{name}-erl_interface
 %defattr(-,root,root)
