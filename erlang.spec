@@ -60,7 +60,7 @@
 
 Name:		erlang
 Version:	R11B
-Release:	%mkrel 7
+Release:	%mkrel 8
 Summary:	General-purpose programming language and runtime environment
 Group:		Development/Other
 License:	MPL style
@@ -109,7 +109,7 @@ Requires:	erlang-cosTransactions
 Requires:	erlang-crypto
 Requires:	erlang-debugger
 Requires:	erlang-dialyzer
-Requires:	erlang-docbbuilder
+Requires:	erlang-docbuilder
 Requires:	erlang-edoc
 Requires:	erlang-erl_interface
 Requires:	erlang-et
