@@ -411,14 +411,14 @@ graphical user interfaces. Programs written using GS work on all Erlang
 platforms and do not depend upon the underlying windowing system.
 
 %package -n %{name}-hipe
-Summary:	hipe
+Summary:	High performance erlang
 License:	MPL-like
 Requires:	erlang-base
 Provides:	hipe = %{hipe_version}
 Group:		Development/Other
 
 %description -n %{name}-hipe
-High-Performance Erlang.
+High-performance erlang.
 
 %package -n %{name}-inviso
 Summary:	An Erlang trace tool.
