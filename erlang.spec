@@ -60,7 +60,7 @@
 
 Name:		erlang
 Version:	R11B
-Release:	%mkrel 8
+Release:	%mkrel 9
 Summary:	General-purpose programming language and runtime environment
 Group:		Development/Other
 License:	MPL style
@@ -82,7 +82,6 @@ BuildRequires:	tk-devel
 %if %build_java
 BuildRequires:	java-1.4.2-gcj-compat-devel
 %endif
-BuildRequires:	flex
 Requires:	tk
 Requires:	tcl
 
@@ -161,7 +160,6 @@ Summary:	Erlang architecture independent files
 License:	MPL-like
 Provides:	%{name} = %{version}-%{release}
 Obsoletes:	%{name}_otp erlang-gs_apps erlang-otp_libs
-Requires:	perl > 5,openssl,sed,flex,gawk
 Group:		Development/Other
 
 %description -n %{name}-base
@@ -189,6 +187,7 @@ This package is used to build some library.
 Summary:	Erlang man pages
 License:	MPL-like
 Provides:	%{name} = %{version}-%{release}
+Requires:	%{name}-base
 Group:		Development/Other
 
 %description -n %{name}-manpages
@@ -396,7 +395,6 @@ Group:		Development/Other
 %description -n %{name}-et
 The Event Tracer (ET) uses the built-in trace mechanism in Erlang and
 provides tools for collection and graphical viewing of trace data.
-
 
 %package -n %{name}-gs
 Summary:	A Graphics System used to write platform independent user interfaces
@@ -711,15 +709,16 @@ a few bugs in the scanner, and improves HTML export.
 #%patch5 -p1 -b .run_erl
 
 %build
-export CFLAGS="%{optflags}"
-export CXXFLAGS="%{optflags}"
-export FFLAGS="%{optflags}"
+%serverbuild
+#export CFLAGS="%{optflags}"
+#export CXXFLAGS="%{optflags}"
+#export FFLAGS="%{optflags}"
 
-%if %mdkversion >= 200710
-export CFLAGS="$CFLAGS -fstack-protector"
-export CXXFLAGS="$CXXFLAGS -fstack-protector"
-export FFLAGS="$FFLAGS -fstack-protector"
-%endif
+#if %mdkversion >= 200710
+#export CFLAGS="$CFLAGS -fstack-protector"
+#export CXXFLAGS="$CXXFLAGS -fstack-protector"
+#export FFLAGS="$FFLAGS -fstack-protector"
+#endif
 
 ./configure \
 	--prefix=%{_prefix} \
