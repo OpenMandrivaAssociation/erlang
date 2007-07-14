@@ -793,6 +793,8 @@ rm -rf %{buildroot}
 
 %files -n %{name}-base
 %defattr(-,root,root)
+%dir %{_libdir}/erlang
+%dir %{_libdir}/erlang/bin
 %{_bindir}/*
 %{_libdir}/erlang/Install
 %{_libdir}/erlang/bin/epmd
@@ -819,6 +821,8 @@ rm -rf %{buildroot}
 
 %files -n %{name}-devel
 %defattr(-,root,root)
+%dir %{_libdir}/%{name}/%{_includedir}
+%dir %{_libdir}/%{name}/%{_prefix}/lib
 %{_libdir}/%{name}/%{_includedir}/*
 %{_libdir}/%{name}/%{_prefix}/lib/*
 
