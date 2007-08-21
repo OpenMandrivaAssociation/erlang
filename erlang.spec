@@ -19,6 +19,7 @@
 %define dialyzer_version 1.7.0
 %define docbuilder_version 0.9
 %define edoc_version 0.7.3
+%define emacs_version 0.0.1
 %define erl_interface_version 3.5.5.3
 %define et_version 1.0.0.1
 %define gs_version 1.5.7
@@ -60,7 +61,7 @@
 
 Name:		erlang
 Version:	R11B
-Release:	%mkrel 9
+Release:	%mkrel 10
 Summary:	General-purpose programming language and runtime environment
 Group:		Development/Other
 License:	MPL style
@@ -80,7 +81,7 @@ BuildRequires:	unixODBC-devel
 BuildRequires:	tcl-devel
 BuildRequires:	tk-devel
 %if %build_java
-BuildRequires:	java-1.4.2-gcj-compat-devel
+BuildRequires:	java-gcj-compat-devel
 %endif
 Requires:	tk
 Requires:	tcl
@@ -228,6 +229,17 @@ Group:		Development/Other
 
 %description -n %{name}-edoc
 This module provides the main user interface to EDoc.
+
+%package -n %{name}-emacs
+Summary:	Emacs support for The Erlang language
+License:	GPL
+Provides:	emacs = %{emacs_version}
+Requires:	erlang-base
+Group:		Development/Other
+Requires:	emacs
+
+%description -n %{name}-emacs
+This module provides the main user interface to Emacs.
 
 %if %build_java
 %package -n %{name}-jinterface
@@ -710,15 +722,6 @@ a few bugs in the scanner, and improves HTML export.
 
 %build
 %serverbuild
-#export CFLAGS="%{optflags}"
-#export CXXFLAGS="%{optflags}"
-#export FFLAGS="%{optflags}"
-
-#if %mdkversion >= 200710
-#export CFLAGS="$CFLAGS -fstack-protector"
-#export CXXFLAGS="$CXXFLAGS -fstack-protector"
-#export FFLAGS="$FFLAGS -fstack-protector"
-#endif
 
 ./configure \
 	--prefix=%{_prefix} \
@@ -749,21 +752,29 @@ mkdir -p erlang_doc
 tar -C erlang_doc -xjf %{SOURCE1}
 tar -C %{buildroot}%{_libdir}/erlang -xjf %{SOURCE2}
 
-# bzip2 manual
-cd %{buildroot}%{_libdir}/%{name}/man
+# lzma'd manual
+pushd %{buildroot}%{_libdir}/%{name}/man
 for manfile in man1 man3 man4 man6
 do
-	bzip2 -9 $manfile/* >/dev/null 2>/dev/null
+	lzma -z -9 $manfile/* >/dev/null 2>/dev/null
 done
-#bzip2 man/man?/*
+popd
 
 # make links to binaries
 mkdir -p %{buildroot}%{_bindir}
-cd %{buildroot}%{_bindir}
+pushd %{buildroot}%{_bindir}
 for file in erl erlc 
 do
   ln -sf ../%{_lib}/erlang/bin/$file .
 done
+popd
+
+# (tpg) fixes bug #32318
+mkdir -p %{buildroot}%{_sysconfdir}/emacs/site-start.d
+cat > %{buildroot}%{_sysconfdir}/emacs/site-start.d/erlang.el << EOF
+(setq load-path (cons "%{_libdir}/%{name}/lib/tools-%{tools_version}/emacs" load-path))
+(load-library "erlang-start")
+EOF
 
 %clean
 rm -rf %{buildroot}
@@ -894,6 +905,10 @@ rm -rf %{buildroot}
 %files -n %{name}-docbuilder
 %defattr(-,root,root)
 %{erlang_libdir}/docbuilder-%{docbuilder_version}
+
+%files -n %{name}-emacs
+%defattr(-,root,root)
+%{_sysconfdir}/emacs/site-start.d/erlang.el
 
 %files -n %{name}-erl_interface
 %defattr(-,root,root)
