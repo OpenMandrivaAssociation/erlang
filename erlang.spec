@@ -61,7 +61,7 @@
 
 Name:		erlang
 Version:	R11B
-Release:	%mkrel 10
+Release:	%mkrel 11
 Summary:	General-purpose programming language and runtime environment
 Group:		Development/Other
 License:	MPL style
@@ -233,13 +233,12 @@ This module provides the main user interface to EDoc.
 %package -n %{name}-emacs
 Summary:	Emacs support for The Erlang language
 License:	GPL
-Provides:	emacs = %{emacs_version}
 Requires:	erlang-base
 Group:		Development/Other
 Requires:	emacs
 
 %description -n %{name}-emacs
-This module provides the main user interface to Emacs.
+This module provides Erlang support to Emacs.
 
 %if %build_java
 %package -n %{name}-jinterface
