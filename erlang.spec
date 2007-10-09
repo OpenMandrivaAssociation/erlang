@@ -430,7 +430,7 @@ Group:		Development/Other
 High-performance erlang.
 
 %package -n %{name}-inviso
-Summary:	An Erlang trace tool.
+Summary:	An Erlang trace tool
 License:	MPL-like
 Requires:	erlang-base
 Provides:	inviso = %{inviso_version}
@@ -450,7 +450,7 @@ Group:		Development/Other
 The IC application is an Erlang implementation of an IDL compiler.
 
 %package -n %{name}-inets
-Summary:	A set of services such as a Web server and a ftp client etc.
+Summary:	A set of services such as a Web server and a ftp client etc
 License:	MPL-like
 Requires:	erlang-base
 Provides:	inets = %{inets_version}
@@ -630,7 +630,7 @@ Group:		Development/Other
 The SSL application provides secure communication over sockets.
 
 %package -n %{name}-syntax_tools
-Summary:	A set of modules for working with Erlang source code.
+Summary:	A set of modules for working with Erlang source code
 License:	MPL-like
 Requires:	erlang-base
 Provides:	syntax_tools = %{syntax_tools_version}
