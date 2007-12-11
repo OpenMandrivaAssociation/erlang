@@ -57,11 +57,11 @@
 %endif
 
 %define erlang_libdir %{_libdir}/erlang/lib
-%define realver R11B-5
+%define realver R12B-0
 
 Name:		erlang
-Version:	R11B
-Release:	%mkrel 11
+Version:	R12B
+Release:	%mkrel 1
 Summary:	General-purpose programming language and runtime environment
 Group:		Development/Other
 License:	MPL style
