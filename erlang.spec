@@ -3,58 +3,59 @@
 %{expand: %{?_with_java: %%global build_java 1}}
 %{expand: %{?_without_java: %%global build_java 0}}
 
-%define erts_version 5.5.5
+%define erts_version 5.6
 %define appmon_version 2.1.9
-%define asn1_version 1.4.5
-%define compiler_version 4.4.5
-%define cosEvent_version 2.1.1
-%define cosEventDomain_version 1.1.1
-%define cosFileTransfer_version 1.1.3
-%define cosNotification_version 1.1.5
-%define cosProperty_version 1.1.4
-%define cosTime_version 1.1.1
-%define cosTransactions_version 1.2.2
+%define asn1_version 1.5
+%define common_test_version 1.3.0
+%define compiler_version 4.5
+%define cosEvent_version 2.1.2
+%define cosEventDomain_version 1.1.2
+%define cosFileTransfer_version 1.1.4
+%define cosNotification_version 1.1.6
+%define cosProperty_version 1.1.5
+%define cosTime_version 1.1.2
+%define cosTransactions_version 1.2.3
 %define crypto_version 1.5.1.1
 %define debugger_version 3.1.1.1
-%define dialyzer_version 1.7.0
-%define docbuilder_version 0.9
-%define edoc_version 0.7.3
+%define dialyzer_version 1.7.1
+%define docbuilder_version 0.9.7
+%define edoc_version 0.7.4
 %define emacs_version 0.0.1
 %define erl_interface_version 3.5.5.3
-%define et_version 1.0.0.1
+%define et_version 1.3
 %define gs_version 1.5.7
-%define hipe_version 3.6.3
-%define ic_version 4.2.13
-%define inets_version 4.7.16
-%define inviso_version 0.4
-%define kernel_version 2.11.5
-%define megaco_version 3.6.0.1
-%define mnemosyne_version 1.2.7.1
-%define mnesia_version 4.3.5
-%define mnesia_session_version 1.1.6.1
-%define observer_version 0.9.7.4
-%define odbc_version 2.0.8
-%define orber_version 3.6.6
-%define os_mon_version 2.1.2.1
-%define otp_mibs_version 1.0.4.1
-%define parsetools_version 1.4.1.1
-%define pman_version 2.6
-%define runtime_tools_version 1.6.6
-%define sasl_version 2.1.5.1
-%define snmp_version 4.9.3
-%define ssh_version 0.9.9.1
-%define ssl_version 3.1.1.1
-%define stdlib_version 1.14.5
-%define syntax_tools_version 1.5.3
-%define toolbar_version 1.3.0.1
-%define tools_version 2.5.5
-%define tv_version 2.1.4.1
-%define typer_version 0.1.0.1
-%define webtool_version 0.8.3.1
-%define xmerl_version 1.1.4
+%define hipe_version 3.6.4
+%define ic_version 4.2.16
+%define inets_version 5.0
+%define inviso_version 0.6
 %if %build_java
-%define jinterface_version 1.3
+%define jinterface_version 1.4
 %endif
+%define kernel_version 2.12
+%define megaco_version 3.7
+%define mnesia_version 4.4
+%define observer_version 0.9.7.4
+%define odbc_version 2.0.9
+%define orber_version 3.6.8
+%define os_mon_version 2.1.3
+%define otp_mibs_version 1.0.4.1
+%define parsetools_version 1.4.2
+%define percept_version 0.5.0
+%define pman_version 2.6
+%define runtime_tools_version 1.7
+%define sasl_version 2.1.5.2
+%define snmp_version 4.10
+%define ssh_version 0.9.9.3
+%define ssl_version 3.9
+%define stdlib_version 1.15
+%define syntax_tools_version 1.5.3
+%define test_server_version 3.2.0
+%define toolbar_version 1.3.0.1
+%define tools_version 2.6
+%define tv_version 2.1.4.1
+%define typer_version 0.1.1
+%define webtool_version 0.8.3.2
+%define xmerl_version 1.1.6
 
 %define erlang_libdir %{_libdir}/erlang/lib
 %define realver R12B-0
@@ -74,7 +75,6 @@ Patch1:		otp-install.patch
 Patch2:		otp-rpath.patch
 Patch3:		otp-sslrpath.patch
 Patch5:		otp-run_erl.patch
-BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel
 BuildRequires:	unixODBC-devel
@@ -83,8 +83,13 @@ BuildRequires:	tk-devel
 %if %build_java
 BuildRequires:	java-gcj-compat-devel
 %endif
+BuildRequires:	flex
+BuildRequires:	bison
+BuildRequires:	libgd-devel
+BuildRequires:	valgrind
 Requires:	tk
 Requires:	tcl
+BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 %description 
 Erlang is a general-purpose programming language and runtime
@@ -98,6 +103,7 @@ License:	MPL-like
 Requires:	erlang-appmon
 Requires:	erlang-asn1
 Requires:	erlang-base
+Requires:	erlang-common_test
 Requires:	erlang-compiler
 Requires:	erlang-cosEvent
 Requires:	erlang-cosEventDomain
@@ -118,32 +124,32 @@ Requires:	erlang-hipe
 Requires:	erlang-ic
 Requires:	erlang-inets
 Requires:	erlang-inviso
+%if %build_java
+Requires:	erlang-jinterface
+%endif
 Requires:	erlang-manpages
 Requires:	erlang-megaco
-Requires:	erlang-mnemosyne
 Requires:	erlang-mnesia
-Requires:	erlang-mnesia_session
 Requires:	erlang-observer
 Requires:	erlang-odbc
 Requires:	erlang-orber
 Requires:	erlang-os_mon
 Requires:	erlang-otp_mibs
 Requires:	erlang-parsetools
+Requires:	erlang-percept
 Requires:	erlang-pman
 Requires:	erlang-runtime_tools
 Requires:	erlang-snmp
 Requires:	erlang-ssh
 Requires:	erlang-ssl
 Requires:	erlang-syntax_tools
+Requires:	erlang-test_server
 Requires:	erlang-toolbar
 Requires:	erlang-tools
 Requires:	erlang-typer
 Requires:	erlang-tv
 Requires:	erlang-webtool
 Requires:	erlang-xmerl
-%if %build_java
-Requires:	erlang-jinterface
-%endif
 Group:		Development/Other
 
 %description -n %{name}-stack
@@ -265,6 +271,16 @@ Group:		Development/Other
 %description -n %{name}-asn1
 Asn1 application contains modules with compile-time and run-time support for
 ASN.1.
+
+%package -n %{name}-common_test
+Summary:	A portable framework for automatic testing
+License:	MPL-like
+Requires:	erlang-base
+Provides:	common_test = %{common_test_version}
+Group:		Development/Other
+
+%description -n %{name}-common_test
+A portable Erlang framework for automatic testing.
 
 %package -n %{name}-compiler
 Summary:	A byte code compiler for Erlang which produces highly compact code
@@ -473,17 +489,6 @@ Group:		Development/Other
 Megaco/H.248 is a protocol for control of elements in a physically decomposed
 multimedia gateway, enabling separation of call control from media conversion.
 
-%package -n %{name}-mnemosyne
-Summary:	Query language support for Mnesia DBMS
-License:	MPL-like
-Requires:	erlang-base
-Provides:	mnemosyne = %{mnemosyne_version}
-Group:		Development/Other
-
-%description -n %{name}-mnemosyne
-Mnemosyne is a query interface to Mnesia. Mnemosyne is an extension of the
-Erlang language, i.e. queries are written embedded in Erlang code.
-
 %package -n %{name}-mnesia
 Summary:	A heavy duty real-time distributed database
 License:	MPL-like
@@ -495,19 +500,6 @@ Group:		Development/Other
 Mnesia is a distributed DataBase Management System (DBMS), appropriate for
 telecommunications applications and other Erlang applications which require
 continuous operation and exhibit soft real-time properties.
-
-%package -n %{name}-mnesia_session
-Summary:	A foreign language interface to Mnesia DBMS
-License:	MPL-like
-Requires:	erlang-base
-Provides:	mnesia_session = %{mnesia_session_version}
-Group:		Development/Other
-
-%description -n %{name}-mnesia_session
-The Mnesia_Session application enables access to the Mnesia DBMS from foreign
-programming languages (i.e. other languages than Erlang). The Mnesia_Session
-interface is defined in IDL (an Interface Definition Language standardized
-by OMG (the Object Management Group)).
 
 %package -n %{name}-observer
 Summary:	Observer, tools for tracing and investigation of distributed systems
@@ -576,6 +568,16 @@ module. Yecc is an LALR-1 parser generator for Erlang, similar to yacc.
 Yecc takes a BNF grammar definition as input, and produces Erlang code for
 a parser as output.
 
+%package -n %{name}-percept
+Summary:	A concurrency profiler tool for Erlang
+License:	MPL-like
+Requires:	erlang-base
+Provides:	percept = %{percept_version}
+Group:		Development/Other
+
+%description -n %{name}-percept
+A concurrency profiler tool for Erlang.
+
 %package -n %{name}-pman
 Summary:	A process manager used to inspect the state of an Erlang system
 License:	MPL-like
@@ -641,6 +643,16 @@ This package defines an abstract datatype that is compatible with the
 `erl_parse' data structures, and provides modules for analysis and
 manipulation, flexible pretty printing, and preservation of source-code
 comments. Now includes `erl_tidy': automatic code tidying and checking.
+
+%package -n %{name}-test_server
+Summary:	The OTP test sewrver for Erlang
+License:	MPL-like
+Requires:	erlang-base
+Provides:	test_server = %{test_server_version}
+Group:		Development/Other
+
+%description -n %{name}-test_server
+The OTP test sewrver for Erlang.
 
 %package -n %{name}-toolbar
 Summary:	A tool bar simplifying access to the Erlang tools
@@ -727,10 +739,15 @@ a few bugs in the scanner, and improves HTML export.
 	--exec-prefix=%{_prefix} \
 	--bindir=%{_bindir} \
 	--libdir=%{_libdir} \
+	--mandir=%{_mandir} \
+	--datadir=%{_datadir} \
 	--enable-threads \
 	--enable-kernel-poll \
 	--enable-hipe \
-	--enable-smp-support
+	--enable-smp-support \
+	--with-ssl \
+	--disable-erlang-mandir
+	
 
 chmod -R u+w .
 %(echo %make|perl -pe 's/-j\d+/-j1/g')
@@ -748,16 +765,9 @@ find %{buildroot}%{_libdir}/erlang -name index.txt.old | xargs rm -f
 
 # doc
 mkdir -p erlang_doc
+mkdir -p %{buildroot}%{_mandir}/erlang
 tar -C erlang_doc -xjf %{SOURCE1}
-tar -C %{buildroot}%{_libdir}/erlang -xjf %{SOURCE2}
-
-# lzma'd manual
-pushd %{buildroot}%{_libdir}/%{name}/man
-for manfile in man1 man3 man4 man6
-do
-	lzma -z -9 $manfile/* >/dev/null 2>/dev/null
-done
-popd
+tar -C %{buildroot}%{_datadir} -xjf %{SOURCE2}
 
 # make links to binaries
 mkdir -p %{buildroot}%{_bindir}
@@ -816,10 +826,9 @@ rm -rf %{buildroot}
 %{_libdir}/erlang/bin/start_clean.boot
 %{_libdir}/erlang/bin/start_sasl.boot
 %{_libdir}/erlang/erts-%{erts_version}
+%{_libdir}/erlang/misc/format_man_pages
+%{_libdir}/erlang/misc/makewhatis
 %{_libdir}/erlang/releases
-%{_libdir}/erlang/COPYRIGHT
-%{_libdir}/erlang/PR.template
-%{_libdir}/erlang/README
 %{_libdir}/erlang/bin/run_erl
 %{_libdir}/erlang/bin/start
 %{_libdir}/erlang/bin/start_erl
@@ -836,23 +845,6 @@ rm -rf %{buildroot}
 %{_libdir}/%{name}/%{_includedir}/*
 %{_libdir}/%{name}/%{_prefix}/lib/*
 
-%files -n %{name}-manpages
-%defattr(-,root,root)
-%{_libdir}/erlang/misc/format_man_pages
-%{_libdir}/erlang/misc/makewhatis
-%{_libdir}/erlang/man
-
-%if %build_java
-%files -n %{name}-jinterface
-%defattr(-,root,root)
-%{erlang_libdir}/jinterface-%{jinterface_version}/priv/OtpErlang.jar
-%{erlang_libdir}/jinterface-%{jinterface_version}/java_src/com/ericsson/otp/erlang/*
-%endif
-
-%files -n %{name}-edoc
-%defattr(-,root,root)
-%{erlang_libdir}/edoc-%{edoc_version}
-
 %files -n %{name}-appmon
 %defattr(-,root,root)
 %{erlang_libdir}/appmon-%{appmon_version}
@@ -864,6 +856,10 @@ rm -rf %{buildroot}
 %files -n %{name}-compiler
 %defattr(-,root,root)
 %{erlang_libdir}/compiler-%{compiler_version}
+
+%files -n %{name}-common_test
+%defattr(-,root,root)
+%{erlang_libdir}/common_test-%{common_test_version}
 
 %files -n %{name}-cosEvent
 %defattr(-,root,root)
@@ -905,6 +901,15 @@ rm -rf %{buildroot}
 %defattr(-,root,root)
 %{erlang_libdir}/docbuilder-%{docbuilder_version}
 
+%files -n %{name}-dialyzer
+%defattr(-,root,root)
+%{erlang_libdir}/dialyzer-%{dialyzer_version}
+%{_libdir}/%{name}/bin/dialyzer
+
+%files -n %{name}-edoc
+%defattr(-,root,root)
+%{erlang_libdir}/edoc-%{edoc_version}
+
 %files -n %{name}-emacs
 %defattr(-,root,root)
 %{_sysconfdir}/emacs/site-start.d/erlang.el
@@ -933,21 +938,31 @@ rm -rf %{buildroot}
 %defattr(-,root,root)
 %{erlang_libdir}/inets-%{inets_version}
 
+%files -n %{name}-inviso
+%defattr(-,root,root)
+%{erlang_libdir}/inviso-%{inviso_version}
+
+%if %build_java
+%files -n %{name}-jinterface
+%defattr(-,root,root)
+%{erlang_libdir}/jinterface-%{jinterface_version}/priv/OtpErlang.jar
+%{erlang_libdir}/jinterface-%{jinterface_version}/java_src/com/ericsson/otp/erlang/*
+%endif
+
+%files -n %{name}-manpages
+%defattr(-,root,root)
+%{_mandir}/*
+%exclude %{_datadir}/COPYRIGHT
+%exclude %{_datadir}/PR.template
+%exclude %{_datadir}/README
+         
 %files -n %{name}-megaco
 %defattr(-,root,root)
 %{erlang_libdir}/megaco-%{megaco_version}
 
-%files -n %{name}-mnemosyne
-%defattr(-,root,root)
-%{erlang_libdir}/mnemosyne-%{mnemosyne_version}
-
 %files -n %{name}-mnesia
 %defattr(-,root,root)
 %{erlang_libdir}/mnesia-%{mnesia_version}
-
-%files -n %{name}-mnesia_session
-%defattr(-,root,root)
-%{erlang_libdir}/mnesia_session-%{mnesia_session_version}
 
 %files -n %{name}-observer
 %defattr(-,root,root)
@@ -973,6 +988,10 @@ rm -rf %{buildroot}
 %defattr(-,root,root)
 %{erlang_libdir}/parsetools-%{parsetools_version}
 
+%files -n %{name}-percept
+%defattr(-,root,root)
+%{erlang_libdir}/percept-%{percept_version}
+
 %files -n %{name}-pman
 %defattr(-,root,root)
 %{erlang_libdir}/pman-%{pman_version}
@@ -996,6 +1015,10 @@ rm -rf %{buildroot}
 %files -n %{name}-syntax_tools
 %defattr(-,root,root)
 %{erlang_libdir}/syntax_tools-%{syntax_tools_version}
+
+%files -n %{name}-test_server
+%defattr(-,root,root)
+%{erlang_libdir}/test_server-%{test_server_version}
 
 %files -n %{name}-toolbar
 %defattr(-,root,root)
@@ -1021,12 +1044,3 @@ rm -rf %{buildroot}
 %files -n %{name}-xmerl
 %defattr(-,root,root)
 %{erlang_libdir}/xmerl-%{xmerl_version}
-
-%files -n %{name}-dialyzer
-%defattr(-,root,root)
-%{erlang_libdir}/dialyzer-%{dialyzer_version}
-%{_libdir}/%{name}/bin/dialyzer
-
-%files -n %{name}-inviso
-%defattr(-,root,root)
-%{erlang_libdir}/inviso-%{inviso_version}
