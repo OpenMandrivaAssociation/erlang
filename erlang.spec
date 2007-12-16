@@ -62,7 +62,7 @@
 
 Name:		erlang
 Version:	R12B
-Release:	%mkrel 1
+Release:	%mkrel 2
 Summary:	General-purpose programming language and runtime environment
 Group:		Development/Other
 License:	MPL style
@@ -81,6 +81,7 @@ BuildRequires:	unixODBC-devel
 BuildRequires:	tcl-devel
 BuildRequires:	tk-devel
 %if %build_java
+BuildRequires:  java-rpmbuild
 BuildRequires:	java-gcj-compat-devel
 %endif
 BuildRequires:	flex
