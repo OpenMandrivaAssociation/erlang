@@ -90,6 +90,7 @@ BuildRequires:	libgd-devel
 BuildRequires:	valgrind
 Requires:	tk
 Requires:	tcl
+BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 %description 
 Erlang is a general-purpose programming language and runtime
