@@ -62,7 +62,7 @@
 
 Name:		erlang
 Version:	R12B
-Release:	%mkrel 3
+Release:	%mkrel 4
 Summary:	General-purpose programming language and runtime environment
 Group:		Development/Other
 License:	MPL style
@@ -229,7 +229,9 @@ Erlang modules or entire (sets of) applications.
 %package -n %{name}-edoc
 Summary:	The Erlang program documentation generator
 License:	MPL-like
-Requires:	erlang-base, syntax_tools >= %{syntax_tools_version}, xmerl >= %{xmerl_version}
+Requires:	erlang-base
+Requires:	erlang-syntax_tools >= %{syntax_tools_version}
+Requires:	erlang-xmerl >= %{xmerl_version}
 Group:		Development/Other
 
 %description -n %{name}-edoc
