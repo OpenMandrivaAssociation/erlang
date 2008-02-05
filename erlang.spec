@@ -62,7 +62,7 @@
 
 Name:		erlang
 Version:	R12B
-Release:	%mkrel 5
+Release:	%mkrel 6
 Summary:	General-purpose programming language and runtime environment
 Group:		Development/Other
 License:	MPL style
@@ -688,6 +688,10 @@ a few bugs in the scanner, and improves HTML export.
 %patch2 -p1 -b .rpath
 %patch3 -p1 -b .sslrpath
 #%patch5 -p1 -b .run_erl
+
+# enable dynamic linking for ssl
+sed -i 's|SSL_DYNAMIC_ONLY=no|SSL_DYNAMIC_ONLY=yes|' erts/configure
+sed -i 's|LD.*=.*|LD = gcc -shared|' lib/common_test/c_src/Makefile
 
 %build
 %serverbuild
