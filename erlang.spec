@@ -526,7 +526,8 @@ Requires:	erlang-base
 Group:		Development/Other
 
 %description -n %{name}-otp_mibs
-The OTP_Mibs application provides an SNMP management information base for Erlang nodes.
+The OTP_Mibs application provides an SNMP management information base for
+Erlang nodes.
 
 %package -n %{name}-parsetools
 Summary:	A set of parsing and lexical analysis tools
