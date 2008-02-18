@@ -62,7 +62,7 @@
 
 Name:		erlang
 Version:	R12B
-Release:	%mkrel 6
+Release:	%mkrel 7
 Summary:	General-purpose programming language and runtime environment
 Group:		Development/Other
 License:	MPL style
