@@ -205,7 +205,7 @@ documentation can be read using the command `erl -man mod', where `mod' is
 the name of the module you want documentation on.
 
 %package -n %{name}-appmon
-Summary:	A utility used to supervise Applications executing on several Erlang nodes
+Summary:	Utility used to supervise Applications executing on several Erlang nodes
 License:	MPL-like
 Requires:	erlang-base
 Group:		Development/Other
@@ -216,7 +216,7 @@ either locally or on remote nodes. The process tree of an application
 can furthermore be monitored.
 
 %package -n %{name}-dialyzer
-Summary:	Dialyzer is a static analysis tool
+Summary:	Static analysis tool
 License:	MPL-like
 Requires:	erlang-base
 Group:		Development/Other
@@ -272,7 +272,7 @@ Asn1 application contains modules with compile-time and run-time support for
 ASN.1.
 
 %package -n %{name}-common_test
-Summary:	A portable framework for automatic testing
+Summary:	Portable framework for automatic testing
 License:	MPL-like
 Requires:	erlang-base
 Group:		Development/Other
@@ -281,7 +281,7 @@ Group:		Development/Other
 A portable Erlang framework for automatic testing.
 
 %package -n %{name}-compiler
-Summary:	A byte code compiler for Erlang which produces highly compact code
+Summary:	Byte code compiler for Erlang which produces highly compact code
 License:	MPL-like
 Requires:	erlang-base
 Group:		Development/Other
@@ -370,7 +370,7 @@ Group:		Development/Other
 Cryptographical support for erlang.
 
 %package -n %{name}-debugger
-Summary:	A debugger for debugging and testing of Erlang programs
+Summary:	Debugger for debugging and testing of Erlang programs
 License:	MPL-like
 Requires:	erlang-base
 Group:		Development/Other
@@ -381,7 +381,7 @@ of Erlang programs. For example, breakpoints can be set, code can be single
 stepped and variable values can be displayed and changed.
 
 %package -n %{name}-docbuilder
-Summary:	A tool for generating HTML documentation for Erlang programs
+Summary:	Tool for generating HTML documentation for Erlang programs
 License:	MPL-like
 Requires:	erlang-base
 Group:		Development/Other
@@ -409,7 +409,7 @@ The Event Tracer (ET) uses the built-in trace mechanism in Erlang and
 provides tools for collection and graphical viewing of trace data.
 
 %package -n %{name}-gs
-Summary:	A Graphics System used to write platform independent user interfaces
+Summary:	Graphics System used to write platform independent user interfaces
 License:	MPL-like
 Requires:	erlang-base, tk, tcl
 Group:		Development/Other
@@ -429,7 +429,7 @@ Group:		Development/Other
 High-performance erlang.
 
 %package -n %{name}-inviso
-Summary:	An Erlang trace tool
+Summary:	Erlang trace tool
 License:	MPL-like
 Requires:	erlang-base
 Group:		Development/Other
@@ -447,7 +447,7 @@ Group:		Development/Other
 The IC application is an Erlang implementation of an IDL compiler.
 
 %package -n %{name}-inets
-Summary:	A set of services such as a Web server and a ftp client etc
+Summary:	Set of services such as a Web server and a ftp client etc
 License:	MPL-like
 Requires:	erlang-base
 Group:		Development/Other
@@ -469,7 +469,7 @@ Megaco/H.248 is a protocol for control of elements in a physically decomposed
 multimedia gateway, enabling separation of call control from media conversion.
 
 %package -n %{name}-mnesia
-Summary:	A heavy duty real-time distributed database
+Summary:	Heavy duty real-time distributed database
 License:	MPL-like
 Requires:	erlang-base
 Group:		Development/Other
@@ -490,7 +490,7 @@ The OBSERVER application contains tools for tracing and investigation of
 distributed systems.
 
 %package -n %{name}-odbc
-Summary: 	A interface to relational SQL-databases built on ODBC
+Summary: 	Interface to relational SQL-databases built on ODBC
 License: 	MPL-like
 Requires: 	erlang-base
 Group:		Development/Other
@@ -500,7 +500,7 @@ The ODBC application is an interface to relational SQL-databases built
 on ODBC (Open Database.)
 
 %package -n %{name}-orber
-Summary:	A CORBA Object Request Broker
+Summary:	CORBA Object Request Broker
 License:	MPL-like
 Requires:	erlang-base
 Group:		Development/Other
@@ -510,7 +510,7 @@ The Orber application is an Erlang implementation of a CORBA Object Request
 Broker.
 
 %package -n %{name}-os_mon
-Summary:	A monitor which allows inspection of the underlying operating system
+Summary:	Monitor which allows inspection of the underlying operating system
 License:	MPL-like
 Requires:	erlang-base
 Group:		Development/Other
@@ -520,7 +520,7 @@ The operating system monitor OS_Mon monitors operating system disk and memory
 usage etc.
 
 %package -n %{name}-otp_mibs
-Summary:	An snmp management information base for Erlang
+Summary:	Snmp management information base for Erlang
 License:	MPL-like
 Requires:	erlang-base
 Group:		Development/Other
@@ -530,7 +530,7 @@ The OTP_Mibs application provides an SNMP management information base for
 Erlang nodes.
 
 %package -n %{name}-parsetools
-Summary:	A set of parsing and lexical analysis tools
+Summary:	Set of parsing and lexical analysis tools
 License:	MPL-like
 Requires:	erlang-base
 Group:		Development/Other
@@ -542,7 +542,7 @@ Yecc takes a BNF grammar definition as input, and produces Erlang code for
 a parser as output.
 
 %package -n %{name}-percept
-Summary:	A concurrency profiler tool for Erlang
+Summary:	Concurrency profiler tool for Erlang
 License:	MPL-like
 Requires:	erlang-base
 Group:		Development/Other
@@ -551,7 +551,7 @@ Group:		Development/Other
 A concurrency profiler tool for Erlang.
 
 %package -n %{name}-pman
-Summary:	A process manager used to inspect the state of an Erlang system
+Summary:	Process manager used to inspect the state of an Erlang system
 License:	MPL-like
 Requires:	erlang-base
 Group:		Development/Other
@@ -590,7 +590,7 @@ Group:		Development/Other
 Secure Shell application with ssh and sftp support.
 
 %package -n %{name}-ssl
-Summary:	An interface to UNIX BSD sockets with Secure Sockets Layer
+Summary:	Interface to UNIX BSD sockets with Secure Sockets Layer
 License:	MPL-like
 Requires:	erlang-base
 Group:		Development/Other
@@ -599,7 +599,7 @@ Group:		Development/Other
 The SSL application provides secure communication over sockets.
 
 %package -n %{name}-syntax_tools
-Summary:	A set of modules for working with Erlang source code
+Summary:	Set of modules for working with Erlang source code
 License:	MPL-like
 Requires:	erlang-base
 Group:		Development/Other
@@ -620,7 +620,7 @@ Group:		Development/Other
 The OTP test sewrver for Erlang.
 
 %package -n %{name}-toolbar
-Summary:	A tool bar simplifying access to the Erlang tools
+Summary:	Tool bar simplifying access to the Erlang tools
 License:	MPL-like
 Requires:	erlang-base
 Group:		Development/Other
@@ -630,7 +630,7 @@ The Toolbar application simplifies access to the Erlang/OTP tools. It
 consists of a number of power buttons, one for each available tool.
 
 %package -n %{name}-tools
-Summary:	A set of programming tools including a coverage analyzer etc
+Summary:	Set of programming tools including a coverage analyzer etc
 License:	MPL-like
 Requires:	erlang-base
 Group:		Development/Other
@@ -640,7 +640,7 @@ The Tools application contains a number of stand-alone tools, which are
 useful when developing Erlang programs.
 
 %package -n %{name}-typer
-Summary:	A type annotator of Erlang code
+Summary:	Type annotator of Erlang code
 License:	MPL-like
 Requires:	erlang-base
 Group:		Development/Other
@@ -649,7 +649,7 @@ Group:		Development/Other
 A type annotator of Erlang code.
 
 %package -n %{name}-tv
-Summary:	An ETS and MNESIA graphical table visualizer
+Summary:	ETS and MNESIA graphical table visualizer
 License:	MPL-like
 Requires:	erlang-base
 Group:		Development/Other
@@ -660,7 +660,7 @@ Once a certain table has been opened in the tool, the content may be viewed
 in various levels of detail.
 
 %package -n %{name}-webtool
-Summary:	A tool that simplifying the use of web based Erlang tools
+Summary:	Tool that simplifying the use of web based Erlang tools
 License:	MPL-like
 Requires:	erlang-base
 Group:		Development/Other
