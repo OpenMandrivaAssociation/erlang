@@ -61,7 +61,7 @@
 %define realver R12B-1
 
 Name:		erlang
-Version:	%(echo %realver|sed -e 's/-.*//g')
+Version:	%(echo %realver | sed -e 's/-//')
 Release:	%mkrel 1
 Summary:	General-purpose programming language and runtime environment
 Group:		Development/Other
