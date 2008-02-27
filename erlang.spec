@@ -87,6 +87,7 @@ BuildRequires:	flex
 BuildRequires:	bison
 BuildRequires:	libgd-devel
 BuildRequires:	valgrind
+BuildRequires:	libgd2-devel
 Requires:	tk
 Requires:	tcl
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
@@ -688,12 +689,11 @@ a few bugs in the scanner, and improves HTML export.
 %patch2 -p1 -b .rpath
 %patch3 -p1 -b .sslrpath
 
-# enable dynamic linking for ssl
-sed -i 's|SSL_DYNAMIC_ONLY=no|SSL_DYNAMIC_ONLY=yes|' erts/configure
-sed -i 's|LD.*=.*|LD = gcc -shared|' lib/common_test/c_src/Makefile
-
 %build
 %serverbuild
+export CFLAGS="%{optflags}"
+export CXXLAGS="%{optflags}"
+ERL_TOP=`pwd`; export ERL_TOP
 
 ./configure \
 	--prefix=%{_prefix} \
@@ -707,11 +707,10 @@ sed -i 's|LD.*=.*|LD = gcc -shared|' lib/common_test/c_src/Makefile
 	--enable-hipe \
 	--enable-smp-support \
 	--with-ssl \
-	--disable-erlang-mandir
+	--disable-erlang-mandir \
+	--enable-dynamic-ssl-lib
 	
-
-chmod -R u+w .
-%(echo %make|perl -pe 's/-j\d+/-j1/g')
+%make -j1
 
 %install
 rm -rf %{buildroot}
@@ -733,7 +732,7 @@ tar -C %{buildroot}%{_datadir} -xjf %{SOURCE2}
 # make links to binaries
 mkdir -p %{buildroot}%{_bindir}
 pushd %{buildroot}%{_bindir}
-for file in erl erlc 
+for file in erl erlc escript run_erl
 do
   ln -sf ../%{_lib}/erlang/bin/$file .
 done
