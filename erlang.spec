@@ -87,7 +87,7 @@ BuildRequires:	flex
 BuildRequires:	bison
 BuildRequires:	libgd-devel
 BuildRequires:	valgrind
-BuildRequires:	libgd2-devel
+BuildRequires:	libgd-devel
 Requires:	tk
 Requires:	tcl
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
