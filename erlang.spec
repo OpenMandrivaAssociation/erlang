@@ -3,62 +3,62 @@
 %{expand: %{?_with_java: %%global build_java 1}}
 %{expand: %{?_without_java: %%global build_java 0}}
 
-%define erts_version 5.6.1
+%define erts_version 5.6.2
 %define appmon_version 2.1.9
-%define asn1_version 1.5
+%define asn1_version 1.5.1
 %define common_test_version 1.3.1
-%define compiler_version 4.5.1
-%define cosEvent_version 2.1.2
-%define cosEventDomain_version 1.1.2
-%define cosFileTransfer_version 1.1.4
-%define cosNotification_version 1.1.6
-%define cosProperty_version 1.1.5
-%define cosTime_version 1.1.2
-%define cosTransactions_version 1.2.3
+%define compiler_version 4.5.2
+%define cosEvent_version 2.1.3
+%define cosEventDomain_version 1.1.3
+%define cosFileTransfer_version 1.1.5
+%define cosNotification_version 1.1.7
+%define cosProperty_version 1.1.6
+%define cosTime_version 1.1.3
+%define cosTransactions_version 1.2.4
 %define crypto_version 1.5.1.1
 %define debugger_version 3.1.1.2
-%define dialyzer_version 1.7.2
-%define docbuilder_version 0.9.8
-%define edoc_version 0.7.4
+%define dialyzer_version 1.8.0
+%define docbuilder_version 0.9.8.4
+%define edoc_version 0.7.5
 %define emacs_version 0.0.1
-%define erl_interface_version 3.5.5.4
+%define erl_interface_version 3.5.6
 %define et_version 1.3
-%define gs_version 1.5.8
-%define hipe_version 3.6.5
-%define ic_version 4.2.16
-%define inets_version 5.0.2
+%define gs_version 1.5.9
+%define hipe_version 3.6.6
+%define ic_version 4.2.17
+%define inets_version 5.0.5
 %define inviso_version 0.6
 %if %build_java
 %define jinterface_version 1.4
 %endif
-%define kernel_version 2.12.1
-%define megaco_version 3.7.1
-%define mnesia_version 4.4
+%define kernel_version 2.12.2
+%define megaco_version 3.7.4
+%define mnesia_version 4.4.2
 %define observer_version 0.9.7.4
 %define odbc_version 2.10
-%define orber_version 3.6.8
+%define orber_version 3.6.9
 %define os_mon_version 2.1.5
 %define otp_mibs_version 1.0.4.1
-%define parsetools_version 1.4.3
-%define percept_version 0.6.2
+%define parsetools_version 1.4.4
+%define percept_version 0.7.1
 %define pman_version 2.6
-%define runtime_tools_version 1.7.1
+%define runtime_tools_version 1.7.2
 %define sasl_version 2.1.5.2
-%define snmp_version 4.10.1
-%define ssh_version 0.9.9.5
+%define snmp_version 4.10.3
+%define ssh_version 0.9.9.6
 %define ssl_version 3.9
-%define stdlib_version 1.15.1
-%define syntax_tools_version 1.5.3
-%define test_server_version 3.2.1
+%define stdlib_version 1.15.2
+%define syntax_tools_version 1.5.4
+%define test_server_version 3.2.2
 %define toolbar_version 1.3.0.1
 %define tools_version 2.6.1
-%define tv_version 2.1.4.1
-%define typer_version 0.1.1
+%define tv_version 2.1.4.2
+%define typer_version 0.1.2
 %define webtool_version 0.8.3.2
-%define xmerl_version 1.1.6
+%define xmerl_version 1.1.8
 
 %define erlang_libdir %{_libdir}/erlang/lib
-%define realver R12B-1
+%define realver R12B-2
 
 Name:		erlang
 Version:	%(echo %realver | sed -e 's/-//')
