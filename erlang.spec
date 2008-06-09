@@ -757,21 +757,37 @@ rm -rf
 %post -n %{name}-base
 %{_libdir}/erlang/Install -minimal %{_libdir}/erlang >/dev/null 2>/dev/null
 
+%if %mdkversion < 200900
 %post -n %{name}-crypto -p /sbin/ldconfig
+%endif
 
+%if %mdkversion < 200900
 %postun -n %{name}-crypto -p /sbin/ldconfig
+%endif
 
+%if %mdkversion < 200900
 %post -n %{name}-asn1 -p /sbin/ldconfig
+%endif
 
+%if %mdkversion < 200900
 %postun -n %{name}-asn1 -p /sbin/ldconfig
+%endif
 
+%if %mdkversion < 200900
 %post -n %{name}-runtime_tools -p /sbin/ldconfig
+%endif
 
+%if %mdkversion < 200900
 %postun -n %{name}-runtime_tools -p /sbin/ldconfig
+%endif
 
+%if %mdkversion < 200900
 %post -n %{name}-megaco -p /sbin/ldconfig
+%endif
 
+%if %mdkversion < 200900
 %postun -n %{name}-megaco -p /sbin/ldconfig
+%endif
 
 %files -n %{name}-stack
 %defattr(-,root,root)
