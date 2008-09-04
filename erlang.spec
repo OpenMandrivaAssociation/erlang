@@ -730,8 +730,8 @@ find %{buildroot}%{_libdir}/erlang -name index.txt.old | xargs rm -f
 # doc
 mkdir -p erlang_doc
 mkdir -p %{buildroot}%{_mandir}/erlang
-tar -C erlang_doc -xjf %{SOURCE1}
-tar -C %{buildroot}%{_datadir} -xjf %{SOURCE2}
+tar -C erlang_doc -xf %{SOURCE1}
+tar -C %{buildroot}%{_datadir} -xf %{SOURCE2}
 
 # make links to binaries
 mkdir -p %{buildroot}%{_bindir}
