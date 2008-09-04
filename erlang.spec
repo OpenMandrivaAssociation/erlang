@@ -3,11 +3,11 @@
 %{expand: %{?_with_java: %%global build_java 1}}
 %{expand: %{?_without_java: %%global build_java 0}}
 
-%define erts_version 5.6.3
+%define erts_version 5.6.4
 %define appmon_version 2.1.9
-%define asn1_version 1.5.2
-%define common_test_version 1.3.2
-%define compiler_version 4.5.3
+%define asn1_version 1.6
+%define common_test_version 1.3.3
+%define compiler_version 4.5.4
 %define cosEvent_version 2.1.3
 %define cosEventDomain_version 1.1.3
 %define cosFileTransfer_version 1.1.5
@@ -15,50 +15,50 @@
 %define cosProperty_version 1.1.6
 %define cosTime_version 1.1.3
 %define cosTransactions_version 1.2.4
-%define crypto_version 1.5.2
+%define crypto_version 1.5.2.1
 %define debugger_version 3.1.1.3
-%define dialyzer_version 1.8.1
+%define dialyzer_version 1.8.2
 %define docbuilder_version 0.9.8.4
 %define edoc_version 0.7.6
 %define emacs_version 0.0.1
-%define erl_interface_version 3.5.7
+%define erl_interface_version 3.5.8
 %define et_version 1.3
 %define gs_version 1.5.9
-%define hipe_version 3.6.7
+%define hipe_version 3.6.8
 %define ic_version 4.2.18
-%define inets_version 5.0.9
+%define inets_version 5.0.10
 %define inviso_version 0.6
 %if %build_java
 %define jinterface_version 1.4.1
 %endif
-%define kernel_version 2.12.3
-%define megaco_version 3.8
-%define mnesia_version 4.4.3
+%define kernel_version 2.12.4
+%define megaco_version 3.8.1
+%define mnesia_version 4.4.5
 %define observer_version 0.9.7.4
-%define odbc_version 2.10.2
+%define odbc_version 2.10.3
 %define orber_version 3.6.9
-%define os_mon_version 2.1.6
+%define os_mon_version 2.1.7
 %define otp_mibs_version 1.0.4.1
 %define parsetools_version 1.4.5
 %define percept_version 0.7.2
 %define pman_version 2.6
 %define runtime_tools_version 1.7.2
 %define sasl_version 2.1.5.3
-%define snmp_version 4.11
-%define ssh_version 0.9.9.6
+%define snmp_version 4.11.1
+%define ssh_version 1.0
 %define ssl_version 3.9
-%define stdlib_version 1.15.3
+%define stdlib_version 1.15.4
 %define syntax_tools_version 1.5.5
-%define test_server_version 3.2.2
+%define test_server_version 3.2.3
 %define toolbar_version 1.3.0.1
-%define tools_version 2.6.1
+%define tools_version 2.6.2
 %define tv_version 2.1.4.2
-%define typer_version 0.1.3
+%define typer_version 0.1.4
 %define webtool_version 0.8.3.2
-%define xmerl_version 1.1.9
+%define xmerl_version 1.1.10
 
 %define erlang_libdir %{_libdir}/erlang/lib
-%define realver R12B-3
+%define realver R12B-4
 
 Name:		erlang
 Version:	%(echo %realver | sed -e 's/-//')
@@ -67,9 +67,9 @@ Summary:	General-purpose programming language and runtime environment
 Group:		Development/Other
 License:	MPL style
 URL:		http://www.erlang.org
-Source:		http://www.erlang.org/download/otp_src_%{realver}.tar.bz2
-Source1:	http://www.erlang.org/download/otp_doc_html_%{realver}.tar.bz2
-Source2:	http://www.erlang.org/download/otp_doc_man_%{realver}.tar.bz2
+Source:		http://www.erlang.org/download/otp_src_%{realver}.tar.lzma
+Source1:	http://www.erlang.org/download/otp_doc_html_%{realver}.tar.lzma
+Source2:	http://www.erlang.org/download/otp_doc_man_%{realver}.tar.lzma
 Patch0:		otp-links.patch
 Patch1:		otp-install.patch
 Patch2:		otp_src_R12B-3-rpath.patch
@@ -81,7 +81,7 @@ BuildRequires:	tcl-devel
 BuildRequires:	tk-devel
 %if %build_java
 BuildRequires:  java-rpmbuild
-BuildRequires:	java-gcj-compat-devel
+#BuildRequires:	java-gcj-compat-devel
 %endif
 BuildRequires:	flex
 BuildRequires:	bison
@@ -803,6 +803,7 @@ rm -rf
 %defattr(-,root,root)
 %dir %{_libdir}/erlang
 %dir %{_libdir}/erlang/bin
+%dir %{_libdir}/erlang/misc
 %{_bindir}/*
 %{_libdir}/erlang/Install
 %{_libdir}/erlang/bin/epmd
@@ -824,7 +825,6 @@ rm -rf
 %{erlang_libdir}/kernel-%{kernel_version}
 %{erlang_libdir}/stdlib-%{stdlib_version}
 %{erlang_libdir}/sasl-%{sasl_version}
-
 
 %files -n %{name}-devel
 %defattr(-,root,root)
