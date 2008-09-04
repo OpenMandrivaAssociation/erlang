@@ -697,7 +697,7 @@ ERL_TOP=`pwd`; export ERL_TOP
 # enable dynamic linking for ssl
 sed -i 's|SSL_DYNAMIC_ONLY=no|SSL_DYNAMIC_ONLY=yes|' erts/configure
 sed -i 's|^LD.*=.*|LD = gcc -shared|' lib/common_test/c_src/Makefile
-#define __cputoolize true
+%define __cputoolize true
 
 %configure2_5x \
 	--prefix=%{_prefix} \
