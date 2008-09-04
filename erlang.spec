@@ -73,7 +73,6 @@ Source2:	http://www.erlang.org/download/otp_doc_man_%{realver}.tar.lzma
 Patch0:		otp-links.patch
 Patch1:		otp-install.patch
 Patch2:		otp_src_R12B-3-rpath.patch
-Patch3:		otp_src_R12B-3-glibc-version.patch
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel
 BuildRequires:	unixODBC-devel
@@ -688,7 +687,6 @@ a few bugs in the scanner, and improves HTML export.
 %patch0 -p1 -b .links
 %patch1 -p1 -b .install
 %patch2 -p1 -b .rpath
-%patch3 -p1 -b .glibc
 
 %build
 %serverbuild
@@ -699,7 +697,7 @@ ERL_TOP=`pwd`; export ERL_TOP
 # enable dynamic linking for ssl
 sed -i 's|SSL_DYNAMIC_ONLY=no|SSL_DYNAMIC_ONLY=yes|' erts/configure
 sed -i 's|^LD.*=.*|LD = gcc -shared|' lib/common_test/c_src/Makefile
-%define __cputoolize true
+#define __cputoolize true
 
 %configure2_5x \
 	--prefix=%{_prefix} \
