@@ -3,62 +3,64 @@
 %{expand: %{?_with_java: %%global build_java 1}}
 %{expand: %{?_without_java: %%global build_java 0}}
 
-%define erts_version 5.6.4
+%define erts_version 5.6.5
 %define appmon_version 2.1.9
-%define asn1_version 1.6
-%define common_test_version 1.3.3
-%define compiler_version 4.5.4
-%define cosEvent_version 2.1.3
-%define cosEventDomain_version 1.1.3
-%define cosFileTransfer_version 1.1.5
-%define cosNotification_version 1.1.7
-%define cosProperty_version 1.1.6
-%define cosTime_version 1.1.3
-%define cosTransactions_version 1.2.4
-%define crypto_version 1.5.2.1
-%define debugger_version 3.1.1.3
+%define asn1_version 1.6.2
+%define common_test_version 1.3.4
+%define compiler_version 4.5.5
+%define cosEvent_version 2.1.4
+%define cosEventDomain_version 1.1.4
+%define cosFileTransfer_version 1.1.6
+%define cosNotification_version 1.1.9
+%define cosProperty_version 1.1.7
+%define cosTime_version 1.1.4
+%define cosTransactions_version 1.2.5
+%define crypto_version 1.5.3
+%define debugger_version 3.1.1.4
 %define dialyzer_version 1.8.2
 %define docbuilder_version 0.9.8.4
-%define edoc_version 0.7.6
+%define edoc_version 0.7.6.2
 %define emacs_version 0.0.1
-%define erl_interface_version 3.5.8
+%define erl_interface_version 3.5.9
 %define et_version 1.3
+%define eunit_version 2.0
 %define gs_version 1.5.9
-%define hipe_version 3.6.8
-%define ic_version 4.2.18
-%define inets_version 5.0.10
+%define hipe_version 3.6.9
+%define ic_version 4.2.19
+%define inets_version 5.0.12
 %define inviso_version 0.6
 %if %build_java
-%define jinterface_version 1.4.1
+%define jinterface_version 1.4.2
 %endif
-%define kernel_version 2.12.4
-%define megaco_version 3.8.1
-%define mnesia_version 4.4.5
+%define kernel_version 2.12.5
+%define megaco_version 3.9.1.1
+%define mnesia_version 4.4.7
 %define observer_version 0.9.7.4
 %define odbc_version 2.10.3
-%define orber_version 3.6.9
-%define os_mon_version 2.1.7
+%define orber_version 3.6.10
+%define os_mon_version 2.1.8
 %define otp_mibs_version 1.0.4.1
 %define parsetools_version 1.4.5
-%define percept_version 0.7.2
+%define percept_version 0.7.3
 %define pman_version 2.6
-%define runtime_tools_version 1.7.2
-%define sasl_version 2.1.5.3
-%define snmp_version 4.11.1
-%define ssh_version 1.0
-%define ssl_version 3.9
-%define stdlib_version 1.15.4
-%define syntax_tools_version 1.5.5
-%define test_server_version 3.2.3
+%define public_key_version 0.1
+%define runtime_tools_version 1.7.3
+%define sasl_version 2.1.5.4
+%define snmp_version 4.12
+%define ssh_version 1.0.2
+%define ssl_version 3.10
+%define stdlib_version 1.15.5
+%define syntax_tools_version 1.5.6
+%define test_server_version 3.2.4
 %define toolbar_version 1.3.0.1
 %define tools_version 2.6.2
 %define tv_version 2.1.4.2
-%define typer_version 0.1.4
+%define typer_version 0.1.5
 %define webtool_version 0.8.3.2
 %define xmerl_version 1.1.10
 
 %define erlang_libdir %{_libdir}/erlang/lib
-%define realver R12B-4
+%define realver R12B-5
 
 Name:		erlang
 Version:	%(echo %realver | sed -e 's/-//')
@@ -80,7 +82,6 @@ BuildRequires:	tcl-devel
 BuildRequires:	tk-devel
 %if %build_java
 BuildRequires:  java-rpmbuild
-#BuildRequires:	java-gcj-compat-devel
 %endif
 BuildRequires:	flex
 BuildRequires:	bison
@@ -120,6 +121,7 @@ Requires:	erlang-docbuilder
 Requires:	erlang-edoc
 Requires:	erlang-erl_interface
 Requires:	erlang-et
+Requires:	erlang-eunit
 Requires:	erlang-gs
 Requires:	erlang-hipe
 Requires:	erlang-ic
@@ -139,6 +141,7 @@ Requires:	erlang-otp_mibs
 Requires:	erlang-parsetools
 Requires:	erlang-percept
 Requires:	erlang-pman
+Requires:	erlang-public_key
 Requires:	erlang-runtime_tools
 Requires:	erlang-snmp
 Requires:	erlang-ssh
@@ -408,6 +411,15 @@ Group:		Development/Other
 The Event Tracer (ET) uses the built-in trace mechanism in Erlang and
 provides tools for collection and graphical viewing of trace data.
 
+%package -n %{name}-eunit
+Summary:	Erlang support for unit testing
+License:	MPL-like
+Requires:	erlang-base
+Group:		Development/Other
+
+%description -n %{name}-eunit
+Erlang support for unit testing.
+
 %package -n %{name}-gs
 Summary:	Graphics System used to write platform independent user interfaces
 License:	MPL-like
@@ -560,6 +572,15 @@ Group:		Development/Other
 The process manager Pman is a graphical tool used to inspect the Erlang
 processes executing either locally or on remote nodes. It is also possible
 to trace events in the individual processes.
+
+%package -n %{name}-public_key
+Summary:	Erlang API to public key infrastructure
+License:	MPL-like
+Requires:	erlang-base
+Group:		Development/Other
+
+%description -n %{name}-public_key
+Erlang API to public key infrastructure.
 
 %package -n %{name}-runtime_tools
 Summary:	Runtime tools, tools to include in a production system
@@ -908,6 +929,10 @@ rm -rf
 %defattr(-,root,root)
 %{erlang_libdir}/et-%{et_version}
 
+%files -n %{name}-eunit
+%defattr(-,root,root)
+%{erlang_libdir}/eunit-%{eunit_version}
+
 %files -n %{name}-gs
 %defattr(-,root,root)
 %{erlang_libdir}/gs-%{gs_version}
@@ -981,6 +1006,10 @@ rm -rf
 %files -n %{name}-pman
 %defattr(-,root,root)
 %{erlang_libdir}/pman-%{pman_version}
+
+%files -n %{name}-public_key
+%defattr(-,root,root)
+%{erlang_libdir}/public_key-%{public_key_version}
 
 %files -n %{name}-runtime_tools
 %defattr(-,root,root)
