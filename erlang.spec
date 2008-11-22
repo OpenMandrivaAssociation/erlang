@@ -17,7 +17,7 @@
 %define cosTransactions_version 1.2.5
 %define crypto_version 1.5.3
 %define debugger_version 3.1.1.4
-%define dialyzer_version 1.8.2
+%define dialyzer_version 1.8.3
 %define docbuilder_version 0.9.8.4
 %define edoc_version 0.7.6.2
 %define emacs_version 0.0.1
