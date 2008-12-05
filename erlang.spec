@@ -64,7 +64,7 @@
 
 Name:		erlang
 Version:	%(echo %realver | sed -e 's/-//')
-Release:	%mkrel 1
+Release:	%mkrel 2
 Summary:	General-purpose programming language and runtime environment
 Group:		Development/Other
 License:	MPL style
