@@ -64,7 +64,7 @@
 
 Name:		erlang
 Version:	%(echo %realver | sed -e 's/-//')
-Release:	%mkrel 2
+Release:	%mkrel 3
 Summary:	General-purpose programming language and runtime environment
 Group:		Development/Other
 License:	MPL style
@@ -822,6 +822,7 @@ rm -rf
 %defattr(-,root,root)
 %dir %{_libdir}/erlang
 %dir %{_libdir}/erlang/bin
+%dir %{_libdir}/erlang/lib
 %dir %{_libdir}/erlang/misc
 %{_bindir}/*
 %{_libdir}/erlang/Install
