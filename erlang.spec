@@ -64,7 +64,7 @@
 
 Name:		erlang
 Version:	%(echo %realver | sed -e 's/-//')
-Release:	%mkrel 3
+Release:	%mkrel 4
 Summary:	General-purpose programming language and runtime environment
 Group:		Development/Other
 License:	MPL style
@@ -75,6 +75,7 @@ Source2:	http://www.erlang.org/download/otp_doc_man_%{realver}.tar.lzma
 Patch0:		otp-links.patch
 Patch1:		otp-install.patch
 Patch2:		otp_src_R12B-3-rpath.patch
+Patch3:		otp_src_R12B-5-fix-format-errors.patch
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel
 BuildRequires:	unixODBC-devel
@@ -708,6 +709,7 @@ a few bugs in the scanner, and improves HTML export.
 %patch0 -p1 -b .links
 %patch1 -p1 -b .install
 %patch2 -p1 -b .rpath
+%patch3 -p1 -b .format
 
 %build
 %serverbuild
