@@ -78,6 +78,8 @@ Patch2:		otp_src_R12B-3-rpath.patch
 Patch3:		otp_src_R12B-5-fix-format-errors.patch
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel
+# needed for configure test
+BuildRequires:	openssl
 BuildRequires:	unixODBC-devel
 BuildRequires:	tcl-devel
 BuildRequires:	tk-devel
