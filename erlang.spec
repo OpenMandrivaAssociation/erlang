@@ -60,14 +60,14 @@
 %define xmerl_version 1.1.10
 
 %define erlang_libdir %{_libdir}/erlang/lib
-%define realver R12B-5
+%define realver R13B01
 
 Name:		erlang
 Version:	%(echo %realver | sed -e 's/-//')
-Release:	%mkrel 4
+Release:	%mkrel 1
 Summary:	General-purpose programming language and runtime environment
 Group:		Development/Other
-License:	MPL style
+License:	MPL-style
 URL:		http://www.erlang.org
 Source:		http://www.erlang.org/download/otp_src_%{realver}.tar.lzma
 Source1:	http://www.erlang.org/download/otp_doc_html_%{realver}.tar.lzma
@@ -710,7 +710,7 @@ a few bugs in the scanner, and improves HTML export.
 %setup -qn otp_src_%{realver}
 %patch0 -p1 -b .links
 %patch1 -p1 -b .install
-%patch2 -p1 -b .rpath
+#%patch2 -p1 -b .rpath
 %patch3 -p1 -b .format
 
 %build
@@ -721,7 +721,7 @@ ERL_TOP=`pwd`; export ERL_TOP
 
 # enable dynamic linking for ssl
 sed -i 's|SSL_DYNAMIC_ONLY=no|SSL_DYNAMIC_ONLY=yes|' erts/configure
-sed -i 's|^LD.*=.*|LD = gcc -shared|' lib/common_test/c_src/Makefile
+#sed -i 's|^LD.*=.*|LD = gcc -shared|' lib/common_test/c_src/Makefile
 %define __cputoolize true
 
 %configure2_5x \
