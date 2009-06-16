@@ -3,61 +3,65 @@
 %{expand: %{?_with_java: %%global build_java 1}}
 %{expand: %{?_without_java: %%global build_java 0}}
 
-%define erts_version 5.6.5
-%define appmon_version 2.1.9
-%define asn1_version 1.6.2
-%define common_test_version 1.3.4
-%define compiler_version 4.5.5
-%define cosEvent_version 2.1.4
-%define cosEventDomain_version 1.1.4
-%define cosFileTransfer_version 1.1.6
-%define cosNotification_version 1.1.9
-%define cosProperty_version 1.1.7
-%define cosTime_version 1.1.4
-%define cosTransactions_version 1.2.5
-%define crypto_version 1.5.3
-%define debugger_version 3.1.1.4
-%define dialyzer_version 1.8.3
-%define docbuilder_version 0.9.8.4
-%define edoc_version 0.7.6.2
+%define erts_version 5.7.2
+%define appmon_version 2.1.10.1
+%define asn1_version 1.6.10
+%define common_test_version 1.4.2
+%define compiler_version 4.6.2
+%define cosEvent_version 2.1.6
+%define cosEventDomain_version 1.1.6
+%define cosFileTransfer_version 1.1.8
+%define cosNotification_version 1.1.11
+%define cosProperty_version 1.1.9
+%define cosTime_version 1.1.6
+%define cosTransactions_version 1.2.7
+%define crypto_version 1.6
+%define debugger_version 3.2
+%define dialyzer_version 1.9.2
+%define docbuilder_version 0.9.8.5
+%define edoc_version 0.7.6.3
 %define emacs_version 0.0.1
-%define erl_interface_version 3.5.9
-%define et_version 1.3
-%define eunit_version 2.0
-%define gs_version 1.5.9
-%define hipe_version 3.6.9
-%define ic_version 4.2.19
-%define inets_version 5.0.12
+%define erl_interface_version 3.6.2
+%define et_version 1.3.1
+%define eunit_version 2.1.2
+%define gs_version 1.5.10
+%define hipe_version 3.7.2
+%define ic_version 4.2.21
+%define inets_version 5.1
 %define inviso_version 0.6
 %if %build_java
-%define jinterface_version 1.4.2
+%define jinterface_version 1.5.1
 %endif
-%define kernel_version 2.12.5
-%define megaco_version 3.9.1.1
-%define mnesia_version 4.4.7
-%define observer_version 0.9.7.4
-%define odbc_version 2.10.3
-%define orber_version 3.6.10
-%define os_mon_version 2.1.8
-%define otp_mibs_version 1.0.4.1
-%define parsetools_version 1.4.5
-%define percept_version 0.7.3
-%define pman_version 2.6
-%define public_key_version 0.1
-%define runtime_tools_version 1.7.3
-%define sasl_version 2.1.5.4
-%define snmp_version 4.12
-%define ssh_version 1.0.2
-%define ssl_version 3.10
-%define stdlib_version 1.15.5
-%define syntax_tools_version 1.5.6
-%define test_server_version 3.2.4
-%define toolbar_version 1.3.0.1
-%define tools_version 2.6.2
-%define tv_version 2.1.4.2
-%define typer_version 0.1.5
-%define webtool_version 0.8.3.2
-%define xmerl_version 1.1.10
+%define kernel_version 2.13.2
+%define megaco_version 3.11
+%define mnesia_version 4.4.10
+%define observer_version 0.9.8.1
+%define odbc_version 2.10.5
+%define orber_version 3.6.13
+%define os_mon_version 2.2.2
+%define otp_mibs_version 1.0.5
+%define parsetools_version 2.0
+%define percept_version 0.8.2
+%define pman_version 2.7
+%define public_key_version 0.2
+#
+%define reltool_version 0.2.2
+%define runtime_tools_version 1.8
+%define sasl_version 2.1.6
+%define snmp_version 4.13.3
+%define ssh_version 1.1.3
+%define ssl_version 3.10.3
+%define stdlib_version 1.16.2
+%define syntax_tools_version 1.6.2
+%define test_server_version 3.3.2
+%define toolbar_version 1.4
+%define tools_version 2.6.4
+%define tv_version 2.1.4.3
+%define typer_version 0.1.7.1
+%define webtool_version 0.8.4
+#
+%define wx_version 0.98.2
+%define xmerl_version 1.2
 
 %define erlang_libdir %{_libdir}/erlang/lib
 %define realver R13B01
@@ -67,14 +71,14 @@ Version:	%(echo %realver | sed -e 's/-//')
 Release:	%mkrel 1
 Summary:	General-purpose programming language and runtime environment
 Group:		Development/Other
-License:	MPL-style
+License:	MPL
 URL:		http://www.erlang.org
 Source:		http://www.erlang.org/download/otp_src_%{realver}.tar.lzma
 Source1:	http://www.erlang.org/download/otp_doc_html_%{realver}.tar.lzma
 Source2:	http://www.erlang.org/download/otp_doc_man_%{realver}.tar.lzma
 Patch0:		otp-links.patch
 Patch1:		otp-install.patch
-Patch2:		otp_src_R12B-3-rpath.patch
+Patch2:		otp_src_R13B01-rpath.patch
 Patch3:		otp_src_R12B-5-fix-format-errors.patch
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel
@@ -92,6 +96,7 @@ BuildRequires:	libgd-devel
 BuildRequires:	valgrind
 BuildRequires:	libgd-devel
 BuildRequires:	m4
+BuildRequires:	wxgtku-devel
 Requires:	tk
 Requires:	tcl
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
@@ -104,10 +109,11 @@ systems from Ericsson.
 
 %package -n %{name}-stack
 Summary:	Erlang bundle
-License:	MPL-like
+License:	MPL
+Group:		Development/Other
+Requires:	erlang-base = %{version}-%{release}
 Requires:	erlang-appmon
 Requires:	erlang-asn1
-Requires:	erlang-base
 Requires:	erlang-common_test
 Requires:	erlang-compiler
 Requires:	erlang-cosEvent
@@ -122,6 +128,7 @@ Requires:	erlang-debugger
 Requires:	erlang-dialyzer
 Requires:	erlang-docbuilder
 Requires:	erlang-edoc
+Requires:	erlang-emacs
 Requires:	erlang-erl_interface
 Requires:	erlang-et
 Requires:	erlang-eunit
@@ -133,7 +140,7 @@ Requires:	erlang-inviso
 %if %build_java
 Requires:	erlang-jinterface
 %endif
-Requires:	erlang-manpages
+#Requires:	erlang-kernel
 Requires:	erlang-megaco
 Requires:	erlang-mnesia
 Requires:	erlang-observer
@@ -145,19 +152,23 @@ Requires:	erlang-parsetools
 Requires:	erlang-percept
 Requires:	erlang-pman
 Requires:	erlang-public_key
+Requires:	erlang-reltool
 Requires:	erlang-runtime_tools
+#Requires:	erlang-sasl
 Requires:	erlang-snmp
 Requires:	erlang-ssh
 Requires:	erlang-ssl
+#Requires:	erlang-stdlib
 Requires:	erlang-syntax_tools
 Requires:	erlang-test_server
 Requires:	erlang-toolbar
 Requires:	erlang-tools
-Requires:	erlang-typer
 Requires:	erlang-tv
+Requires:	erlang-typer
 Requires:	erlang-webtool
+Requires:	erlang-wx
 Requires:	erlang-xmerl
-Group:		Development/Other
+
 Obsoletes:	%{name}-mnesia_session
 Obsoletes:	%{name}-mnemosyne
 
@@ -173,10 +184,12 @@ Includes the Erlang/OTP graphical libraries.
 
 %package -n %{name}-base
 Summary:	Erlang architecture independent files
-License:	MPL-like
-Provides:	%{name} = %{version}-%{release}
-Obsoletes:	%{name}_otp erlang-gs_apps erlang-otp_libs
+License:	MPL
 Group:		Development/Other
+Provides:	%{name} = %{version}-%{release}
+Obsoletes:	%{name}_otp
+Obsoletes:	erlang-gs_apps
+Obsoletes:	erlang-otp_libs
 
 %description -n %{name}-base
 Erlang architecture independent files
@@ -190,10 +203,10 @@ Includes the Erlang/OTP graphical libraries.
 
 %package -n %{name}-devel
 Summary:	Erlang header
-License:	MPL-like
-Requires:	erlang-base
-Provides:	%{name}-devel = %{version}-%{release}
+License:	MPL
 Group:		Development/Other
+Requires:	%{name}-base = %{version}-%{release}
+Provides:	%{name}-devel = %{version}-%{release}
 
 %description -n %{name}-devel
 Erlang headers.
@@ -201,8 +214,8 @@ This package is used to build some library.
 
 %package -n %{name}-manpages
 Summary:	Erlang man pages
-License:	MPL-like
-Requires:	%{name}-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-manpages
@@ -212,8 +225,8 @@ the name of the module you want documentation on.
 
 %package -n %{name}-appmon
 Summary:	Utility used to supervise Applications executing on several Erlang nodes
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-appmon
@@ -223,8 +236,8 @@ can furthermore be monitored.
 
 %package -n %{name}-dialyzer
 Summary:	Static analysis tool
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-dialyzer
@@ -234,8 +247,8 @@ Erlang modules or entire (sets of) applications.
 
 %package -n %{name}-edoc
 Summary:	The Erlang program documentation generator
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Requires:	erlang-syntax_tools
 Requires:	erlang-xmerl
 Group:		Development/Other
@@ -246,7 +259,7 @@ This module provides the main user interface to EDoc.
 %package -n %{name}-emacs
 Summary:	Emacs support for The Erlang language
 License:	GPL
-Requires:	erlang-base
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 Requires:	emacs
 
@@ -256,8 +269,8 @@ This module provides Erlang support to Emacs.
 %if %build_java
 %package -n %{name}-jinterface
 Summary:	Low level interface to Java
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-jinterface
@@ -269,8 +282,8 @@ Erl_Interface library.
 
 %package -n %{name}-asn1
 Summary:	Provides support for Abstract Syntax Notation One
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-asn1
@@ -279,8 +292,8 @@ ASN.1.
 
 %package -n %{name}-common_test
 Summary:	Portable framework for automatic testing
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-common_test
@@ -288,8 +301,8 @@ A portable Erlang framework for automatic testing.
 
 %package -n %{name}-compiler
 Summary:	Byte code compiler for Erlang which produces highly compact code
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-compiler
@@ -298,8 +311,8 @@ byte-code is executed by the Erlang emulator.
 
 %package -n %{name}-cosEvent
 Summary:	Orber OMG Event Service
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-cosEvent
@@ -308,8 +321,8 @@ CosEvent.
 
 %package -n %{name}-cosEventDomain
 Summary:	Orber OMG Event Domain Service
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-cosEventDomain
@@ -318,8 +331,8 @@ Service CosEventDomainAdmin.
 
 %package -n %{name}-cosFileTransfer
 Summary:	Orber OMG File Transfer Service
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-cosFileTransfer
@@ -328,8 +341,8 @@ OMG CORBA File Transfer Service.
 
 %package -n %{name}-cosNotification
 Summary:	Orber OMG Notification Service
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-cosNotification
@@ -338,8 +351,8 @@ CORBA Notification Service.
 
 %package -n %{name}-cosProperty
 Summary:	Orber OMG Property Service
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-cosProperty
@@ -348,8 +361,8 @@ CORBA Property Service.
 
 %package -n %{name}-cosTime
 Summary:	Orber OMG Timer and TimerEvent Services
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-cosTime
@@ -358,8 +371,8 @@ CORBA Time and TimerEvent Services.
 
 %package -n %{name}-cosTransactions
 Summary:	Orber OMG Transaction Service
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-cosTransactions
@@ -368,8 +381,8 @@ CORBA Transaction Service.
 
 %package -n %{name}-crypto
 Summary:	Cryptographical support
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-crypto
@@ -377,8 +390,8 @@ Cryptographical support for erlang.
 
 %package -n %{name}-debugger
 Summary:	Debugger for debugging and testing of Erlang programs
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-debugger
@@ -388,8 +401,8 @@ stepped and variable values can be displayed and changed.
 
 %package -n %{name}-docbuilder
 Summary:	Tool for generating HTML documentation for Erlang programs
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-docbuilder
@@ -397,8 +410,8 @@ A tool for generating HTML documentation for Erlang programs.
 
 %package -n %{name}-erl_interface
 Summary:	Low level interface to C
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-erl_interface
@@ -406,8 +419,8 @@ Low level interface to C for erlang.
 
 %package -n %{name}-et
 Summary:	Event Tracer
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-et
@@ -416,8 +429,8 @@ provides tools for collection and graphical viewing of trace data.
 
 %package -n %{name}-eunit
 Summary:	Erlang support for unit testing
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-eunit
@@ -425,8 +438,8 @@ Erlang support for unit testing.
 
 %package -n %{name}-gs
 Summary:	Graphics System used to write platform independent user interfaces
-License:	MPL-like
-Requires:	erlang-base, tk, tcl
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}, tk, tcl
 Group:		Development/Other
 
 %description -n %{name}-gs
@@ -436,8 +449,8 @@ platforms and do not depend upon the underlying windowing system.
 
 %package -n %{name}-hipe
 Summary:	High performance erlang
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-hipe
@@ -445,8 +458,8 @@ High-performance erlang.
 
 %package -n %{name}-inviso
 Summary:	Erlang trace tool
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-inviso
@@ -454,8 +467,8 @@ An Erlang trace tool.
 
 %package -n %{name}-ic
 Summary:	IDL compiler
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-ic
@@ -463,8 +476,8 @@ The IC application is an Erlang implementation of an IDL compiler.
 
 %package -n %{name}-inets
 Summary:	Set of services such as a Web server and a ftp client etc
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-inets
@@ -474,9 +487,9 @@ is an efficient implementation of HTTP 1.1 as defined in RFC 2616, i.e.
 a Web server.
 
 %package -n %{name}-megaco
-Summary:	framework for building applications on top of the Megaco/H.248 protocol
-License:	MPL-like
-Requires:	erlang-base
+Summary:	Framework for building applications on top of the Megaco/H.248 protocol
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-megaco
@@ -485,8 +498,8 @@ multimedia gateway, enabling separation of call control from media conversion.
 
 %package -n %{name}-mnesia
 Summary:	Heavy duty real-time distributed database
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-mnesia
@@ -496,8 +509,8 @@ continuous operation and exhibit soft real-time properties.
 
 %package -n %{name}-observer
 Summary:	Observer, tools for tracing and investigation of distributed systems
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-observer
@@ -506,8 +519,8 @@ distributed systems.
 
 %package -n %{name}-odbc
 Summary: 	Interface to relational SQL-databases built on ODBC
-License: 	MPL-like
-Requires: 	erlang-base
+License: 	MPL
+Requires: 	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-odbc
@@ -516,8 +529,8 @@ on ODBC (Open Database.)
 
 %package -n %{name}-orber
 Summary:	CORBA Object Request Broker
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-orber
@@ -526,8 +539,8 @@ Broker.
 
 %package -n %{name}-os_mon
 Summary:	Monitor which allows inspection of the underlying operating system
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-os_mon
@@ -536,8 +549,8 @@ usage etc.
 
 %package -n %{name}-otp_mibs
 Summary:	Snmp management information base for Erlang
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-otp_mibs
@@ -546,8 +559,8 @@ Erlang nodes.
 
 %package -n %{name}-parsetools
 Summary:	Set of parsing and lexical analysis tools
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-parsetools
@@ -558,8 +571,8 @@ a parser as output.
 
 %package -n %{name}-percept
 Summary:	Concurrency profiler tool for Erlang
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-percept
@@ -567,8 +580,8 @@ A concurrency profiler tool for Erlang.
 
 %package -n %{name}-pman
 Summary:	Process manager used to inspect the state of an Erlang system
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-pman
@@ -578,17 +591,30 @@ to trace events in the individual processes.
 
 %package -n %{name}-public_key
 Summary:	Erlang API to public key infrastructure
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-public_key
 Erlang API to public key infrastructure.
 
+%package -n %{name}-reltool
+Summary:	A release management tool for Erlang
+License:	MPL
+Group:		Development/Other
+Requires:	%{name}-base = %{version}-%{release}
+
+%description -n %{name}-reltool
+It analyses a given Erlang/OTP installation and determines various
+dependencies between applications. The graphical frontend depicts
+the dependencies and enables interactive customization of a
+target system. The backend provides a batch interface for
+generation of customized target systems.
+
 %package -n %{name}-runtime_tools
 Summary:	Runtime tools, tools to include in a production system
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-runtime_tools
@@ -596,8 +622,8 @@ Runtime tools, tools to include in a production system.
 
 %package -n %{name}-snmp
 Summary:	Simple Network Management Protocol (SNMP) support
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-snmp
@@ -606,8 +632,8 @@ a MIB compiler and facilities for implementing SNMP MIBs etc.
 
 %package -n %{name}-ssh
 Summary:	Secure Shell application with ssh and sftp support
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-ssh
@@ -615,8 +641,8 @@ Secure Shell application with ssh and sftp support.
 
 %package -n %{name}-ssl
 Summary:	Interface to UNIX BSD sockets with Secure Sockets Layer
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description -n %{name}-ssl
@@ -624,9 +650,9 @@ The SSL application provides secure communication over sockets.
 
 %package -n %{name}-syntax_tools
 Summary:	Set of modules for working with Erlang source code
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
 Group:		Development/Other
+Requires:	%{name}-base = %{version}-%{release}
 
 %description -n %{name}-syntax_tools
 This package defines an abstract datatype that is compatible with the
@@ -636,18 +662,18 @@ comments. Now includes `erl_tidy': automatic code tidying and checking.
 
 %package -n %{name}-test_server
 Summary:	The OTP test sewrver for Erlang
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
 Group:		Development/Other
+Requires:	%{name}-base = %{version}-%{release}
 
 %description -n %{name}-test_server
 The OTP test sewrver for Erlang.
 
 %package -n %{name}-toolbar
 Summary:	Tool bar simplifying access to the Erlang tools
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
 Group:		Development/Other
+Requires:	%{name}-base = %{version}-%{release}
 
 %description -n %{name}-toolbar
 The Toolbar application simplifies access to the Erlang/OTP tools. It
@@ -655,9 +681,9 @@ consists of a number of power buttons, one for each available tool.
 
 %package -n %{name}-tools
 Summary:	Set of programming tools including a coverage analyzer etc
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
 Group:		Development/Other
+Requires:	%{name}-base = %{version}-%{release}
 
 %description -n %{name}-tools
 The Tools application contains a number of stand-alone tools, which are
@@ -665,18 +691,18 @@ useful when developing Erlang programs.
 
 %package -n %{name}-typer
 Summary:	Type annotator of Erlang code
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
 Group:		Development/Other
+Requires:	%{name}-base = %{version}-%{release}
 
 %description -n %{name}-typer
 A type annotator of Erlang code.
 
 %package -n %{name}-tv
 Summary:	ETS and MNESIA graphical table visualizer
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
 Group:		Development/Other
+Requires:	%{name}-base = %{version}-%{release}
 
 %description -n %{name}-tv
 The TV application enables the user to examine ETS and Mnesia tables.
@@ -685,19 +711,29 @@ in various levels of detail.
 
 %package -n %{name}-webtool
 Summary:	Tool that simplifying the use of web based Erlang tools
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
 Group:		Development/Other
+Requires:	%{name}-base = %{version}-%{release}
 
 %description -n %{name}-webtool
 Erlang Module to configure,and start the webserver httpd and the various
 web based tools to Erlang/OTP.
 
+%package -n %{name}-wx
+Summary:	Graphic system for Erlang
+License:	MPL
+Group:		Development/Other
+Requires:	%{name}-base = %{version}-%{release}
+
+%description -n %{name}-wx
+A Graphics System used to write platform independent user interfaces
+for Erlang.
+
 %package -n %{name}-xmerl
 Summary:	XML processing tools
-License:	MPL-like
-Requires:	erlang-base
+License:	MPL
 Group:		Development/Other
+Requires:	%{name}-base = %{version}-%{release}
 
 %description -n %{name}-xmerl
 Implements a set of tools for processing XML documents, as well as working
@@ -710,7 +746,7 @@ a few bugs in the scanner, and improves HTML export.
 %setup -qn otp_src_%{realver}
 %patch0 -p1 -b .links
 %patch1 -p1 -b .install
-#%patch2 -p1 -b .rpath
+%patch2 -p1 -b .rpath
 %patch3 -p1 -b .format
 
 %build
@@ -721,8 +757,7 @@ ERL_TOP=`pwd`; export ERL_TOP
 
 # enable dynamic linking for ssl
 sed -i 's|SSL_DYNAMIC_ONLY=no|SSL_DYNAMIC_ONLY=yes|' erts/configure
-#sed -i 's|^LD.*=.*|LD = gcc -shared|' lib/common_test/c_src/Makefile
-%define __cputoolize true
+#define __cputoolize true
 
 %configure2_5x \
 	--prefix=%{_prefix} \
@@ -731,6 +766,9 @@ sed -i 's|SSL_DYNAMIC_ONLY=no|SSL_DYNAMIC_ONLY=yes|' erts/configure
 	--libdir=%{_libdir} \
 	--mandir=%{_mandir} \
 	--datadir=%{_datadir} \
+	%ifarch x86_64
+	--enable-m64-build \
+	%endif
 	--enable-threads \
 	--enable-kernel-poll \
 	--enable-hipe \
@@ -738,7 +776,7 @@ sed -i 's|SSL_DYNAMIC_ONLY=no|SSL_DYNAMIC_ONLY=yes|' erts/configure
 	--with-ssl \
 	--disable-erlang-mandir \
 	--enable-dynamic-ssl-lib
-	
+
 %make -j1
 
 %install
@@ -846,6 +884,7 @@ rm -rf
 %{_libdir}/erlang/bin/start
 %{_libdir}/erlang/bin/start_erl
 %{_libdir}/erlang/bin/to_erl
+%{erlang_libdir}/erts-%{erts_version}
 %{erlang_libdir}/kernel-%{kernel_version}
 %{erlang_libdir}/stdlib-%{stdlib_version}
 %{erlang_libdir}/sasl-%{sasl_version}
@@ -1016,6 +1055,10 @@ rm -rf
 %defattr(-,root,root)
 %{erlang_libdir}/public_key-%{public_key_version}
 
+%files -n %{name}-reltool
+%defattr(-,root,root)
+%{erlang_libdir}/reltool-%{reltool_version}
+
 %files -n %{name}-runtime_tools
 %defattr(-,root,root)
 %{erlang_libdir}/runtime_tools-%{runtime_tools_version}
@@ -1060,6 +1103,10 @@ rm -rf
 %files -n %{name}-webtool
 %defattr(-,root,root)
 %{erlang_libdir}/webtool-%{webtool_version}
+
+%files -n %{name}-wx
+%defattr(-,root,root)
+%{erlang_libdir}/wx-%{wx_version}
 
 %files -n %{name}-xmerl
 %defattr(-,root,root)
