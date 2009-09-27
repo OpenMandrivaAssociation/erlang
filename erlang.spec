@@ -64,7 +64,7 @@
 %define xmerl_version 1.2
 
 %define erlang_libdir %{_libdir}/erlang/lib
-%define realver R13B01
+%define realver R13B02
 
 Name:		erlang
 Version:	%(echo %realver | sed -e 's/-//')
@@ -73,13 +73,14 @@ Summary:	General-purpose programming language and runtime environment
 Group:		Development/Other
 License:	MPL
 URL:		http://www.erlang.org
-Source:		http://www.erlang.org/download/otp_src_%{realver}.tar.lzma
-Source1:	http://www.erlang.org/download/otp_doc_html_%{realver}.tar.lzma
-Source2:	http://www.erlang.org/download/otp_doc_man_%{realver}.tar.lzma
+Source0:	http://www.erlang.org/download/otp_src_%{realver}.tar.xz
+Source1:	http://www.erlang.org/download/otp_doc_html_%{realver}.tar.xz
+Source2:	http://www.erlang.org/download/otp_doc_man_%{realver}.tar.xz
 Patch0:		otp-links.patch
 Patch1:		otp-install.patch
 Patch2:		otp_src_R13B01-rpath.patch
 Patch3:		otp_src_R12B-5-fix-format-errors.patch
+Patch4:		otp_src_R13B02_OTP-8199.patch
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel
 # needed for configure test
@@ -748,6 +749,7 @@ a few bugs in the scanner, and improves HTML export.
 %patch1 -p1 -b .install
 %patch2 -p1 -b .rpath
 %patch3 -p1 -b .format
+%patch4 -p1 -b .reltool
 
 %build
 %serverbuild
