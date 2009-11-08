@@ -3,66 +3,6 @@
 %{expand: %{?_with_java: %%global build_java 1}}
 %{expand: %{?_without_java: %%global build_java 0}}
 
-%define erts_version 5.7.2
-%define appmon_version 2.1.10.1
-%define asn1_version 1.6.10
-%define common_test_version 1.4.2
-%define compiler_version 4.6.2
-%define cosEvent_version 2.1.6
-%define cosEventDomain_version 1.1.6
-%define cosFileTransfer_version 1.1.8
-%define cosNotification_version 1.1.11
-%define cosProperty_version 1.1.9
-%define cosTime_version 1.1.6
-%define cosTransactions_version 1.2.7
-%define crypto_version 1.6
-%define debugger_version 3.2
-%define dialyzer_version 1.9.2
-%define docbuilder_version 0.9.8.5
-%define edoc_version 0.7.6.3
-%define emacs_version 0.0.1
-%define erl_interface_version 3.6.2
-%define et_version 1.3.1
-%define eunit_version 2.1.2
-%define gs_version 1.5.10
-%define hipe_version 3.7.2
-%define ic_version 4.2.21
-%define inets_version 5.1
-%define inviso_version 0.6
-%if %build_java
-%define jinterface_version 1.5.1
-%endif
-%define kernel_version 2.13.2
-%define megaco_version 3.11
-%define mnesia_version 4.4.10
-%define observer_version 0.9.8.1
-%define odbc_version 2.10.5
-%define orber_version 3.6.13
-%define os_mon_version 2.2.2
-%define otp_mibs_version 1.0.5
-%define parsetools_version 2.0
-%define percept_version 0.8.2
-%define pman_version 2.7
-%define public_key_version 0.2
-#
-%define reltool_version 0.2.2
-%define runtime_tools_version 1.8
-%define sasl_version 2.1.6
-%define snmp_version 4.13.3
-%define ssh_version 1.1.3
-%define ssl_version 3.10.3
-%define stdlib_version 1.16.2
-%define syntax_tools_version 1.6.2
-%define test_server_version 3.3.2
-%define toolbar_version 1.4
-%define tools_version 2.6.4
-%define tv_version 2.1.4.3
-%define typer_version 0.1.7.1
-%define webtool_version 0.8.4
-#
-%define wx_version 0.98.2
-%define xmerl_version 1.2
-
 %define erlang_libdir %{_libdir}/erlang/lib
 %define realver R13B02
 
@@ -746,7 +686,7 @@ a few bugs in the scanner, and improves HTML export.
 %prep
 %setup -qn otp_src_%{realver}
 %patch0 -p1 -b .links
-%patch1 -p1 -b .install
+#%patch1 -p1 -b .install
 %patch2 -p1 -b .rpath
 %patch3 -p1 -b .format
 %patch4 -p1 -b .reltool
@@ -760,6 +700,7 @@ ERL_TOP=`pwd`; export ERL_TOP
 # enable dynamic linking for ssl
 sed -i 's|SSL_DYNAMIC_ONLY=no|SSL_DYNAMIC_ONLY=yes|' erts/configure
 #define __cputoolize true
+%define _disable_ld_no_undefined 1
 
 %configure2_5x \
 	--prefix=%{_prefix} \
@@ -810,7 +751,7 @@ popd
 # (tpg) fixes bug #32318
 mkdir -p %{buildroot}%{_sysconfdir}/emacs/site-start.d
 cat > %{buildroot}%{_sysconfdir}/emacs/site-start.d/erlang.el << EOF
-(setq load-path (cons "%{_libdir}/%{name}/lib/tools-%{tools_version}/emacs" load-path))
+(setq load-path (cons "%{_libdir}/%{name}/lib/tools-*/emacs" load-path))
 (add-to-list 'load-path "%{_datadir}/emacs/site-lisp/ess")
 (load-library "erlang-start")
 EOF
@@ -878,7 +819,7 @@ rm -rf
 %{_libdir}/erlang/bin/start.script
 %{_libdir}/erlang/bin/start_clean.boot
 %{_libdir}/erlang/bin/start_sasl.boot
-%{_libdir}/erlang/erts-%{erts_version}
+%{_libdir}/erlang/erts-*
 %{_libdir}/erlang/misc/format_man_pages
 %{_libdir}/erlang/misc/makewhatis
 %{_libdir}/erlang/releases
@@ -886,10 +827,10 @@ rm -rf
 %{_libdir}/erlang/bin/start
 %{_libdir}/erlang/bin/start_erl
 %{_libdir}/erlang/bin/to_erl
-%{erlang_libdir}/erts-%{erts_version}
-%{erlang_libdir}/kernel-%{kernel_version}
-%{erlang_libdir}/stdlib-%{stdlib_version}
-%{erlang_libdir}/sasl-%{sasl_version}
+%{erlang_libdir}/erts-*
+%{erlang_libdir}/kernel-*
+%{erlang_libdir}/stdlib-*
+%{erlang_libdir}/sasl-*
 
 %files -n %{name}-devel
 %defattr(-,root,root)
@@ -900,68 +841,68 @@ rm -rf
 
 %files -n %{name}-appmon
 %defattr(-,root,root)
-%{erlang_libdir}/appmon-%{appmon_version}
+%{erlang_libdir}/appmon-*
 
 %files -n %{name}-asn1
 %defattr(-,root,root)
-%{erlang_libdir}/asn1-%{asn1_version}
+%{erlang_libdir}/asn1-*
 
 %files -n %{name}-compiler
 %defattr(-,root,root)
-%{erlang_libdir}/compiler-%{compiler_version}
+%{erlang_libdir}/compiler-*
 
 %files -n %{name}-common_test
 %defattr(-,root,root)
-%{erlang_libdir}/common_test-%{common_test_version}
+%{erlang_libdir}/common_test-*
 
 %files -n %{name}-cosEvent
 %defattr(-,root,root)
-%{erlang_libdir}/cosEvent-%{cosEvent_version}
+%{erlang_libdir}/cosEvent-*
 
 %files -n %{name}-cosEventDomain
 %defattr(-,root,root)
-%{erlang_libdir}/cosEventDomain-%{cosEventDomain_version}
+%{erlang_libdir}/cosEventDomain-*
 
 %files -n %{name}-cosFileTransfer
 %defattr(-,root,root)
-%{erlang_libdir}/cosFileTransfer-%{cosFileTransfer_version}
+%{erlang_libdir}/cosFileTransfer-*
 
 %files -n %{name}-cosNotification
 %defattr(-,root,root)
-%{erlang_libdir}/cosNotification-%{cosNotification_version}
+%{erlang_libdir}/cosNotification-*
 
 %files -n %{name}-cosProperty
 %defattr(-,root,root)
-%{erlang_libdir}/cosProperty-%{cosProperty_version}
+%{erlang_libdir}/cosProperty-*
 
 %files -n %{name}-cosTime
 %defattr(-,root,root)
-%{erlang_libdir}/cosTime-%{cosTime_version}
+%{erlang_libdir}/cosTime-*
 
 %files -n %{name}-cosTransactions
 %defattr(-,root,root)
-%{erlang_libdir}/cosTransactions-%{cosTransactions_version}
+%{erlang_libdir}/cosTransactions-*
 
 %files -n %{name}-crypto
 %defattr(-,root,root)
-%{erlang_libdir}/crypto-%{crypto_version}
+%{erlang_libdir}/crypto-*
 
 %files -n %{name}-debugger
 %defattr(-,root,root)
-%{erlang_libdir}/debugger-%{debugger_version}
+%{erlang_libdir}/debugger-*
 
 %files -n %{name}-docbuilder
 %defattr(-,root,root)
-%{erlang_libdir}/docbuilder-%{docbuilder_version}
+%{erlang_libdir}/docbuilder-*
 
 %files -n %{name}-dialyzer
 %defattr(-,root,root)
-%{erlang_libdir}/dialyzer-%{dialyzer_version}
+%{erlang_libdir}/dialyzer-*
 %{_libdir}/%{name}/bin/dialyzer
 
 %files -n %{name}-edoc
 %defattr(-,root,root)
-%{erlang_libdir}/edoc-%{edoc_version}
+%{erlang_libdir}/edoc-*
 
 %files -n %{name}-emacs
 %defattr(-,root,root)
@@ -969,41 +910,41 @@ rm -rf
 
 %files -n %{name}-erl_interface
 %defattr(-,root,root)
-%{erlang_libdir}/erl_interface-%{erl_interface_version}
+%{erlang_libdir}/erl_interface-*
 
 %files -n %{name}-et
 %defattr(-,root,root)
-%{erlang_libdir}/et-%{et_version}
+%{erlang_libdir}/et-*
 
 %files -n %{name}-eunit
 %defattr(-,root,root)
-%{erlang_libdir}/eunit-%{eunit_version}
+%{erlang_libdir}/eunit-*
 
 %files -n %{name}-gs
 %defattr(-,root,root)
-%{erlang_libdir}/gs-%{gs_version}
+%{erlang_libdir}/gs-*
 
 %files -n %{name}-hipe
 %defattr(-,root,root)
-%{erlang_libdir}/hipe-%{hipe_version}
+%{erlang_libdir}/hipe-*
 
 %files -n %{name}-ic
 %defattr(-,root,root)
-%{erlang_libdir}/ic-%{ic_version}
+%{erlang_libdir}/ic-*
 
 %files -n %{name}-inets
 %defattr(-,root,root)
-%{erlang_libdir}/inets-%{inets_version}
+%{erlang_libdir}/inets-*
 
 %files -n %{name}-inviso
 %defattr(-,root,root)
-%{erlang_libdir}/inviso-%{inviso_version}
+%{erlang_libdir}/inviso-*
 
 %if %build_java
 %files -n %{name}-jinterface
 %defattr(-,root,root)
-%{erlang_libdir}/jinterface-%{jinterface_version}/priv/OtpErlang.jar
-%{erlang_libdir}/jinterface-%{jinterface_version}/java_src/com/ericsson/otp/erlang/*
+%{erlang_libdir}/jinterface-*/priv/OtpErlang.jar
+%{erlang_libdir}/jinterface-*/java_src/com/ericsson/otp/erlang/*
 %endif
 
 %files -n %{name}-manpages
@@ -1015,101 +956,101 @@ rm -rf
          
 %files -n %{name}-megaco
 %defattr(-,root,root)
-%{erlang_libdir}/megaco-%{megaco_version}
+%{erlang_libdir}/megaco-*
 
 %files -n %{name}-mnesia
 %defattr(-,root,root)
-%{erlang_libdir}/mnesia-%{mnesia_version}
+%{erlang_libdir}/mnesia-*
 
 %files -n %{name}-observer
 %defattr(-,root,root)
-%{erlang_libdir}/observer-%{observer_version}
+%{erlang_libdir}/observer-*
 
 %files -n %{name}-odbc
 %defattr(-,root,root)
-%{erlang_libdir}/odbc-%{odbc_version}
+%{erlang_libdir}/odbc-*
 
 %files -n %{name}-orber
 %defattr(-,root,root)
-%{erlang_libdir}/orber-%{orber_version}
+%{erlang_libdir}/orber-*
 
 %files -n %{name}-os_mon
 %defattr(-,root,root)
-%{erlang_libdir}/os_mon-%{os_mon_version}
+%{erlang_libdir}/os_mon-*
 
 %files -n %{name}-otp_mibs
 %defattr(-,root,root)
-%{erlang_libdir}/otp_mibs-%{otp_mibs_version}
+%{erlang_libdir}/otp_mibs-*
 
 %files -n %{name}-parsetools
 %defattr(-,root,root)
-%{erlang_libdir}/parsetools-%{parsetools_version}
+%{erlang_libdir}/parsetools-*
 
 %files -n %{name}-percept
 %defattr(-,root,root)
-%{erlang_libdir}/percept-%{percept_version}
+%{erlang_libdir}/percept-*
 
 %files -n %{name}-pman
 %defattr(-,root,root)
-%{erlang_libdir}/pman-%{pman_version}
+%{erlang_libdir}/pman-*
 
 %files -n %{name}-public_key
 %defattr(-,root,root)
-%{erlang_libdir}/public_key-%{public_key_version}
+%{erlang_libdir}/public_key-*
 
 %files -n %{name}-reltool
 %defattr(-,root,root)
-%{erlang_libdir}/reltool-%{reltool_version}
+%{erlang_libdir}/reltool-*
 
 %files -n %{name}-runtime_tools
 %defattr(-,root,root)
-%{erlang_libdir}/runtime_tools-%{runtime_tools_version}
+%{erlang_libdir}/runtime_tools-*
 
 %files -n %{name}-snmp
 %defattr(-,root,root)
-%{erlang_libdir}/snmp-%{snmp_version}
+%{erlang_libdir}/snmp-*
 
 %files -n %{name}-ssh
 %defattr(-,root,root)
-%{erlang_libdir}/ssh-%{ssh_version}
+%{erlang_libdir}/ssh-*
 
 %files -n %{name}-ssl
 %defattr(-,root,root)
-%{erlang_libdir}/ssl-%{ssl_version}
+%{erlang_libdir}/ssl-*
 
 %files -n %{name}-syntax_tools
 %defattr(-,root,root)
-%{erlang_libdir}/syntax_tools-%{syntax_tools_version}
+%{erlang_libdir}/syntax_tools-*
 
 %files -n %{name}-test_server
 %defattr(-,root,root)
-%{erlang_libdir}/test_server-%{test_server_version}
+%{erlang_libdir}/test_server-*
 
 %files -n %{name}-toolbar
 %defattr(-,root,root)
-%{erlang_libdir}/toolbar-%{toolbar_version}
+%{erlang_libdir}/toolbar-*
 
 %files -n %{name}-tools
 %defattr(-,root,root)
-%{erlang_libdir}/tools-%{tools_version}
+%{erlang_libdir}/tools-*
 
 %files -n %{name}-typer
 %defattr(-,root,root)
-%{erlang_libdir}/typer-%{typer_version}
+%{erlang_libdir}/typer-*
 %{_libdir}/%{name}/bin/typer
 
 %files -n %{name}-tv
 %defattr(-,root,root)
-%{erlang_libdir}/tv-%{tv_version}
+%{erlang_libdir}/tv-*
 
 %files -n %{name}-webtool
 %defattr(-,root,root)
-%{erlang_libdir}/webtool-%{webtool_version}
+%{erlang_libdir}/webtool-*
 
 %files -n %{name}-wx
 %defattr(-,root,root)
-%{erlang_libdir}/wx-%{wx_version}
+%{erlang_libdir}/wx-*
 
 %files -n %{name}-xmerl
 %defattr(-,root,root)
-%{erlang_libdir}/xmerl-%{xmerl_version}
+%{erlang_libdir}/xmerl-*
