@@ -4,12 +4,12 @@
 %{expand: %{?_without_java: %%global build_java 0}}
 
 %define erlang_libdir %{_libdir}/erlang/lib
-%define realver R13B02
+%define realver R13B03
 
+Summary:	General-purpose programming language and runtime environment
 Name:		erlang
 Version:	%(echo %realver | sed -e 's/-//')
 Release:	%mkrel 1
-Summary:	General-purpose programming language and runtime environment
 Group:		Development/Other
 License:	MPL
 URL:		http://www.erlang.org
@@ -20,7 +20,6 @@ Patch0:		otp-links.patch
 Patch1:		otp-install.patch
 Patch2:		otp_src_R13B01-rpath.patch
 Patch3:		otp_src_R12B-5-fix-format-errors.patch
-Patch4:		otp_src_R13B02_OTP-8199.patch
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel
 # needed for configure test
@@ -70,6 +69,7 @@ Requires:	erlang-dialyzer
 Requires:	erlang-docbuilder
 Requires:	erlang-edoc
 Requires:	erlang-emacs
+Requires:	erlang-erl_docgen
 Requires:	erlang-erl_interface
 Requires:	erlang-et
 Requires:	erlang-eunit
@@ -348,6 +348,17 @@ Group:		Development/Other
 
 %description -n %{name}-docbuilder
 A tool for generating HTML documentation for Erlang programs.
+
+%package -n %{name}-erl_docgen
+Summary:	Documentation generator
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
+Group:		Development/Other
+
+%description -n %{name}-erl_docgen
+Documentation generator for erlang.
+
+/usr/lib/erlang/lib/erl_docgen-0.1
 
 %package -n %{name}-erl_interface
 Summary:	Low level interface to C
@@ -689,7 +700,6 @@ a few bugs in the scanner, and improves HTML export.
 #%patch1 -p1 -b .install
 %patch2 -p1 -b .rpath
 %patch3 -p1 -b .format
-%patch4 -p1 -b .reltool
 
 %build
 %serverbuild
@@ -908,6 +918,10 @@ rm -rf
 %defattr(-,root,root)
 %{_sysconfdir}/emacs/site-start.d/erlang.el
 
+%files -n %{name}-erl_docgen
+%defattr(-,root,root)
+%{erlang_libdir}/erl_docgen-*
+
 %files -n %{name}-erl_interface
 %defattr(-,root,root)
 %{erlang_libdir}/erl_interface-*
@@ -953,7 +967,7 @@ rm -rf
 %exclude %{_datadir}/COPYRIGHT
 %exclude %{_datadir}/PR.template
 %exclude %{_datadir}/README
-         
+
 %files -n %{name}-megaco
 %defattr(-,root,root)
 %{erlang_libdir}/megaco-*
