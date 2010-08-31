@@ -4,12 +4,12 @@
 %{expand: %{?_without_java: %%global build_java 0}}
 
 %define erlang_libdir %{_libdir}/erlang/lib
-%define realver R13B03
+%define realver R14A
 
 Summary:	General-purpose programming language and runtime environment
 Name:		erlang
 Version:	%(echo %realver | sed -e 's/-//')
-Release:	%mkrel 3
+Release:	%mkrel 1
 Group:		Development/Other
 License:	MPL
 URL:		http://www.erlang.org
@@ -20,6 +20,7 @@ Patch0:		otp-links.patch
 Patch1:		otp-install.patch
 Patch2:		otp_src_R13B01-rpath.patch
 Patch3:		otp_src_R12B-5-fix-format-errors.patch
+Patch4:		otp_src_R14A-fix-as-needed.patch
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel
 # needed for configure test
@@ -358,8 +359,6 @@ Group:		Development/Other
 %description -n %{name}-erl_docgen
 Documentation generator for erlang.
 
-/usr/lib/erlang/lib/erl_docgen-0.1
-
 %package -n %{name}-erl_interface
 Summary:	Low level interface to C
 License:	MPL
@@ -696,10 +695,11 @@ a few bugs in the scanner, and improves HTML export.
 
 %prep
 %setup -qn otp_src_%{realver}
-%patch0 -p1 -b .links
-#%patch1 -p1 -b .install
-%patch2 -p1 -b .rpath
+#%patch0 -p1 -b .links
+#%patch1 -p1 -b .install fixd
+#%patch2 -p1 -b .rpath rediff
 %patch3 -p1 -b .format
+%patch4 -p1 -b .lm
 
 %build
 %serverbuild
@@ -710,7 +710,7 @@ ERL_TOP=`pwd`; export ERL_TOP
 # enable dynamic linking for ssl
 sed -i 's|SSL_DYNAMIC_ONLY=no|SSL_DYNAMIC_ONLY=yes|' erts/configure
 #define __cputoolize true
-%define _disable_ld_no_undefined 1
+#define _disable_ld_no_undefined 1
 
 %configure2_5x \
 	--prefix=%{_prefix} \
