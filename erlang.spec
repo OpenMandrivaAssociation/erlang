@@ -834,6 +834,7 @@ rm -rf
 %{_libdir}/erlang/misc/makewhatis
 %{_libdir}/erlang/releases
 %{_libdir}/erlang/bin/run_erl
+%{_libdir}/erlang/bin/run_test
 %{_libdir}/erlang/bin/start
 %{_libdir}/erlang/bin/start_erl
 %{_libdir}/erlang/bin/to_erl
