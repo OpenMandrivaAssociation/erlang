@@ -710,7 +710,7 @@ ERL_TOP=`pwd`; export ERL_TOP
 # enable dynamic linking for ssl
 sed -i 's|SSL_DYNAMIC_ONLY=no|SSL_DYNAMIC_ONLY=yes|' erts/configure
 #define __cputoolize true
-#define _disable_ld_no_undefined 1
+%define _disable_ld_no_undefined 1
 
 %configure2_5x \
 	--prefix=%{_prefix} \
