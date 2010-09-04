@@ -811,7 +811,7 @@ rm -rf
 
 %files -n %{name}-stack
 %defattr(-,root,root)
-%doc AUTHORS EPLICENCE README
+%doc AUTHORS EPLICENCE README.md
 
 %files -n %{name}-base
 %defattr(-,root,root)
