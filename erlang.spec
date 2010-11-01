@@ -4,7 +4,7 @@
 %{expand: %{?_without_java: %%global build_java 0}}
 
 %define erlang_libdir %{_libdir}/erlang/lib
-%define realver R14A
+%define realver R14B
 
 Summary:	General-purpose programming language and runtime environment
 Name:		erlang
@@ -20,7 +20,6 @@ Patch0:		otp-links.patch
 Patch1:		otp-install.patch
 Patch2:		otp_src_R13B01-rpath.patch
 Patch3:		otp_src_R12B-5-fix-format-errors.patch
-Patch4:		otp_src_R14A-fix-as-needed.patch
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel
 # needed for configure test
@@ -699,7 +698,6 @@ a few bugs in the scanner, and improves HTML export.
 #%patch1 -p1 -b .install fixd
 #%patch2 -p1 -b .rpath rediff
 %patch3 -p1 -b .format
-%patch4 -p1 -b .lm
 
 %build
 %serverbuild
