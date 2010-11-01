@@ -741,6 +741,11 @@ find %{buildroot}%{_libdir}/erlang -name Makefile | xargs chmod 644
 find %{buildroot}%{_libdir}/erlang -name \*.bat | xargs rm -f
 find %{buildroot}%{_libdir}/erlang -name index.txt.old | xargs rm -f
 
+# (tpg) remove not needed files
+rm -rf %{buildroot}%{_datadir}/COPYRIGHT
+rm -rf %{buildroot}%{_datadir}/PR.template
+rm -rf %{buildroot}%{_datadir}/README
+
 # doc
 mkdir -p erlang_doc
 mkdir -p %{buildroot}%{_mandir}/erlang
@@ -770,7 +775,7 @@ sed -i "s|%{buildroot}||" erts*/bin/{erl,start} releases/RELEASES bin/{erl,start
 popd
 
 %clean
-rm -rf 
+rm -rf
 
 %post -n %{name}-base
 %{_libdir}/erlang/Install -minimal %{_libdir}/erlang >/dev/null 2>/dev/null
