@@ -968,9 +968,6 @@ rm -rf
 %files -n %{name}-manpages
 %defattr(-,root,root)
 %{_mandir}/*
-%exclude %{_datadir}/COPYRIGHT
-%exclude %{_datadir}/PR.template
-%exclude %{_datadir}/README
 
 %files -n %{name}-megaco
 %defattr(-,root,root)
