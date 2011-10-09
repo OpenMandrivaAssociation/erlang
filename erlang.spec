@@ -4,7 +4,7 @@
 %{expand: %{?_without_java: %%global build_java 0}}
 
 %define erlang_libdir %{_libdir}/erlang/lib
-%define realver R14B
+%define realver R14B04
 
 Summary:	General-purpose programming language and runtime environment
 Name:		erlang
@@ -13,13 +13,16 @@ Release:	%mkrel 1
 Group:		Development/Other
 License:	MPL
 URL:		http://www.erlang.org
-Source0:	http://www.erlang.org/download/otp_src_%{realver}.tar.xz
-Source1:	http://www.erlang.org/download/otp_doc_html_%{realver}.tar.xz
-Source2:	http://www.erlang.org/download/otp_doc_man_%{realver}.tar.xz
+Source0:	http://www.erlang.org/download/otp_src_%{realver}.tar.gz
+Source1:	http://www.erlang.org/download/otp_doc_html_%{realver}.tar.gz
+Source2:	http://www.erlang.org/download/otp_doc_man_%{realver}.tar.gz
 Patch0:		otp-links.patch
 Patch1:		otp-install.patch
 Patch2:		otp_src_R13B01-rpath.patch
 Patch3:		otp_src_R12B-5-fix-format-errors.patch
+# fix linking by removing --no-undefined from WX_LIBS
+Patch4:		R14B03-remove-no-udefined-from-wx.patch
+BuildRoot:     %{_tmppath}/%{name}-%{version}-buildroot
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel
 # needed for configure test
@@ -33,13 +36,16 @@ BuildRequires:  java-rpmbuild
 BuildRequires:	flex
 BuildRequires:	bison
 BuildRequires:	libgd-devel
+%if %mdkversion < 201100
 BuildRequires:	valgrind
+%else
+BuildRequires:	valgrind-devel
+%endif
 BuildRequires:	libgd-devel
 BuildRequires:	m4
 BuildRequires:	wxgtku-devel
 Requires:	tk
 Requires:	tcl
-BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 %description 
 Erlang is a general-purpose programming language and runtime
@@ -66,6 +72,7 @@ Requires:	erlang-cosTransactions
 Requires:	erlang-crypto
 Requires:	erlang-debugger
 Requires:	erlang-dialyzer
+Requires:	erlang-diameter
 Requires:	erlang-docbuilder
 Requires:	erlang-edoc
 Requires:	erlang-emacs
@@ -185,6 +192,15 @@ Group:		Development/Other
 Dialyzer is a static analysis tool that identifies software discrepancies 
 such as type errors, unreachable code, unnecessary tests, etc in single 
 Erlang modules or entire (sets of) applications.
+
+%package -n %{name}-diameter
+Summary:	An implementation of the Diameter protocol as defined by RFC 3588
+License:	MPL
+Requires:	%{name}-base = %{version}-%{release}
+Group:		Development/Other
+
+%description -n %{name}-diameter
+An implementation of the Diameter protocol as defined by RFC 3588.
 
 %package -n %{name}-edoc
 Summary:	The Erlang program documentation generator
@@ -698,6 +714,7 @@ a few bugs in the scanner, and improves HTML export.
 #%patch1 -p1 -b .install fixd
 #%patch2 -p1 -b .rpath rediff
 %patch3 -p1 -b .format
+%patch4 -p1 -b .no-undefined
 
 %build
 %serverbuild
@@ -780,38 +797,6 @@ rm -rf
 %post -n %{name}-base
 %{_libdir}/erlang/Install -minimal %{_libdir}/erlang >/dev/null 2>/dev/null
 
-%if %mdkversion < 200900
-%post -n %{name}-crypto -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{name}-crypto -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%post -n %{name}-asn1 -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{name}-asn1 -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%post -n %{name}-runtime_tools -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{name}-runtime_tools -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%post -n %{name}-megaco -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{name}-megaco -p /sbin/ldconfig
-%endif
-
 %files -n %{name}-stack
 %defattr(-,root,root)
 %doc AUTHORS EPLICENCE README.md
@@ -824,6 +809,7 @@ rm -rf
 %dir %{_libdir}/erlang/misc
 %{_bindir}/*
 %{_libdir}/erlang/Install
+%{_libdir}/erlang/bin/ct_run
 %{_libdir}/erlang/bin/epmd
 %{_libdir}/erlang/bin/erl
 %{_libdir}/erlang/bin/erlc
@@ -913,6 +899,10 @@ rm -rf
 %defattr(-,root,root)
 %{erlang_libdir}/dialyzer-*
 %{_libdir}/%{name}/bin/dialyzer
+
+%files -n %{name}-diameter
+%defattr(-,root,root)
+%{erlang_libdir}/diameter-*
 
 %files -n %{name}-edoc
 %defattr(-,root,root)
@@ -1069,3 +1059,4 @@ rm -rf
 %files -n %{name}-xmerl
 %defattr(-,root,root)
 %{erlang_libdir}/xmerl-*
+
