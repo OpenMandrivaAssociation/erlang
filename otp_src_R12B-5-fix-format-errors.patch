@@ -1,0 +1,21 @@
+diff -Naur --exclude '*~' otp_src_R12B-5/lib/tools/c_src/erl_memory.c otp_src_R12B-5-fix-format-errors/lib/tools/c_src/erl_memory.c
+--- otp_src_R12B-5/lib/tools/c_src/erl_memory.c	2007-11-26 20:03:50.000000000 +0100
++++ otp_src_R12B-5-fix-format-errors/lib/tools/c_src/erl_memory.c	2009-02-28 13:00:48.000000000 +0100
+@@ -1230,7 +1230,7 @@
+ 
+     switch (state->info.stop_reason) {
+     case EMTP_STOP:
+-	p += sprintf(p, stop_str);
++	p += sprintf(p, "%s", stop_str);
+ 	break;
+     case EMTP_EXIT:
+ 	p += sprintf(p, exit_str, state->info.exit_status);
+@@ -2377,7 +2377,7 @@
+ 	    "  " SW_CHAR "p <P>    - set listen port to <P>\n"
+ 	    "  " SW_CHAR "t        - display info about total values\n"
+ 	    "  " SW_CHAR "v        - verbose output\n";
+-	fprintf(filep, help_str);
++	fprintf(filep, "%s", help_str);
+ 	exit(0);
+     }
+ 

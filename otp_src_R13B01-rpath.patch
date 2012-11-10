@@ -1,0 +1,36 @@
+diff -Naur otp_src_R13B01/lib/crypto/c_src/Makefile.in otp_src_R13B01.tpg/lib/crypto/c_src/Makefile.in
+--- otp_src_R13B01/lib/crypto/c_src/Makefile.in	2009-03-12 12:29:01.000000000 +0000
++++ otp_src_R13B01.tpg/lib/crypto/c_src/Makefile.in	2009-06-16 20:55:26.000000000 +0000
+@@ -81,7 +81,7 @@
+ HOST_OS := $(shell $(ERL_TOP)/erts/autoconf/config.guess)
+ endif
+ DYNAMIC_CRYPTO_LIB=@SSL_DYNAMIC_ONLY@
+-LD_R_FLAG=@DED_LD_FLAG_RUNTIME_LIBRARY_PATH@
++LD_R_FLAG=
+ ifeq ($(strip $(LD_R_FLAG)),)
+ LD_R_OPT =
+ else
+diff -Naur otp_src_R13B01/lib/crypto/priv/Makefile otp_src_R13B01.tpg/lib/crypto/priv/Makefile
+--- otp_src_R13B01/lib/crypto/priv/Makefile	2004-09-14 12:07:45.000000000 +0000
++++ otp_src_R13B01.tpg/lib/crypto/priv/Makefile	2009-06-16 20:56:40.000000000 +0000
+@@ -60,7 +60,7 @@
+ # ----------------------------------------------------
+ 
+ $(SO_DRIVER): $(OBJS)
+-	$(SO_LD) $(SO_LDFLAGS) -L$(SO_SSL_LIBDIR) -Wl,-R$(SO_SSL_LIBDIR) \
++	$(SO_LD) $(SO_LDFLAGS) -L$(LIBDIR) \
+ 	-o $@ $^ -lcrypto
+ 
+ $(DLL_DRIVER): $(OBJS)
+diff -Naur otp_src_R13B01/lib/ssl/c_src/Makefile.in otp_src_R13B01.tpg/lib/ssl/c_src/Makefile.in
+--- otp_src_R13B01/lib/ssl/c_src/Makefile.in	2009-03-12 12:29:07.000000000 +0000
++++ otp_src_R13B01.tpg/lib/ssl/c_src/Makefile.in	2009-06-16 21:00:18.000000000 +0000
+@@ -105,7 +105,7 @@
+ SSL_MAKEFILE =
+ endif
+ 
+-CC_R_FLAG=@CFLAG_RUNTIME_LIBRARY_PATH@
++CC_R_FLAG=
+ ifeq ($(findstring @,$(CC_R_FLAG)),@)
+ # Old erts configure used which hasn't replaced @CFLAG_RUNTIME_LIBRARY_PATH@;
+ # we try our best here instead...
