@@ -4,7 +4,7 @@
 %{expand: %{?_without_java: %%global build_java 0}}
 
 %define erlang_libdir %{_libdir}/erlang/lib
-%define realver R14B04
+%define realver R15B03
 
 Summary:	General-purpose programming language and runtime environment
 Name:		erlang
@@ -16,13 +16,8 @@ URL:		http://www.erlang.org
 Source0:	http://www.erlang.org/download/otp_src_%{realver}.tar.gz
 Source1:	http://www.erlang.org/download/otp_doc_html_%{realver}.tar.gz
 Source2:	http://www.erlang.org/download/otp_doc_man_%{realver}.tar.gz
-Patch0:		otp-links.patch
-Patch1:		otp-install.patch
-Patch2:		otp_src_R13B01-rpath.patch
-Patch3:		otp_src_R12B-5-fix-format-errors.patch
 # fix linking by removing --no-undefined from WX_LIBS
 Patch4:		R14B03-remove-no-udefined-from-wx.patch
-BuildRoot:     %{_tmppath}/%{name}-%{version}-buildroot
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel
 # needed for configure test
@@ -73,8 +68,8 @@ Requires:	erlang-crypto
 Requires:	erlang-debugger
 Requires:	erlang-dialyzer
 Requires:	erlang-diameter
-Requires:	erlang-docbuilder
 Requires:	erlang-edoc
+Requires:	erlang-eldap
 Requires:	erlang-emacs
 Requires:	erlang-erl_docgen
 Requires:	erlang-erl_interface
@@ -212,6 +207,19 @@ Group:		Development/Other
 
 %description -n %{name}-edoc
 This module provides the main user interface to EDoc.
+
+%package -n %{name}-eldap
+Summary:	The Erlang LDAP library 
+License:	MPL
+Requires:	%{name}-asn1 = %{version}-%{release}
+Requires:	%{name}-base = %{version}-%{release}
+Requires:	%{name}-hipe = %{version}-%{release}
+Requires:	%{name}-ssl = %{version}-%{release}
+Group:		Development/Other
+
+%description -n %{name}-eldap
+Eldap is a module which provides a client API to the Lightweight Directory
+Access Protocol (LDAP).
 
 %package -n %{name}-emacs
 Summary:	Emacs support for The Erlang language
@@ -355,15 +363,6 @@ Group:		Development/Other
 Debugger is a graphical tool which can be used for debugging and testing
 of Erlang programs. For example, breakpoints can be set, code can be single
 stepped and variable values can be displayed and changed.
-
-%package -n %{name}-docbuilder
-Summary:	Tool for generating HTML documentation for Erlang programs
-License:	MPL
-Requires:	%{name}-base = %{version}-%{release}
-Group:		Development/Other
-
-%description -n %{name}-docbuilder
-A tool for generating HTML documentation for Erlang programs.
 
 %package -n %{name}-erl_docgen
 Summary:	Documentation generator
@@ -710,10 +709,6 @@ a few bugs in the scanner, and improves HTML export.
 
 %prep
 %setup -qn otp_src_%{realver}
-#%patch0 -p1 -b .links
-#%patch1 -p1 -b .install fixd
-#%patch2 -p1 -b .rpath rediff
-%patch3 -p1 -b .format
 %patch4 -p1 -b .no-undefined
 
 %build
@@ -748,7 +743,6 @@ sed -i 's|SSL_DYNAMIC_ONLY=no|SSL_DYNAMIC_ONLY=yes|' erts/configure
 %make -j1
 
 %install
-rm -rf %{buildroot}
 
 %makeinstall_std INSTALL_PREFIX=%{buildroot}
 
@@ -790,9 +784,6 @@ popd
 rm -rf %{buildroot}%{_datadir}/COPYRIGHT
 rm -rf %{buildroot}%{_datadir}/PR.template
 rm -rf %{buildroot}%{_datadir}/README
-
-%clean
-rm -rf
 
 %post -n %{name}-base
 %{_libdir}/erlang/Install -minimal %{_libdir}/erlang >/dev/null 2>/dev/null
@@ -891,10 +882,6 @@ rm -rf
 %defattr(-,root,root)
 %{erlang_libdir}/debugger-*
 
-%files -n %{name}-docbuilder
-%defattr(-,root,root)
-%{erlang_libdir}/docbuilder-*
-
 %files -n %{name}-dialyzer
 %defattr(-,root,root)
 %{erlang_libdir}/dialyzer-*
@@ -907,6 +894,10 @@ rm -rf
 %files -n %{name}-edoc
 %defattr(-,root,root)
 %{erlang_libdir}/edoc-*
+
+%files -n %{name}-eldap
+%defattr(-,root,root)
+%{erlang_libdir}/eldap-*
 
 %files -n %{name}-emacs
 %defattr(-,root,root)
@@ -957,7 +948,7 @@ rm -rf
 
 %files -n %{name}-manpages
 %defattr(-,root,root)
-%{_mandir}/*
+%{_mandir}/*/*
 
 %files -n %{name}-megaco
 %defattr(-,root,root)
@@ -1059,4 +1050,200 @@ rm -rf
 %files -n %{name}-xmerl
 %defattr(-,root,root)
 %{erlang_libdir}/xmerl-*
+
+
+
+%changelog
+* Sun Oct 09 2011 Andrey Bondrov <abondrov@mandriva.org> R14B04-1mdv2012.0
++ Revision: 703848
+- New version: R14B04
+
+* Sat Nov 06 2010 Tomasz Pawel Gajc <tpg@mandriva.org> R14B-1mdv2011.0
++ Revision: 594192
+- do not use %%exclude macro
+- remove not needed files
+- update to new version R14B
+- drop patch4, fixed by upstream
+
+* Sat Sep 04 2010 Tomasz Pawel Gajc <tpg@mandriva.org> R14A-1mdv2011.0
++ Revision: 576001
+- fix file list
+- fix docs
+- update to new version 14A
+- disable patches 0, 1 and 2
+- Patch3: fix missing linkage to math library
+
+* Wed Apr 21 2010 Funda Wang <fwang@mandriva.org> R13B03-3mdv2010.1
++ Revision: 537452
+- rebuild
+
+* Mon Feb 01 2010 Frederic Crozat <fcrozat@mandriva.com> R13B03-2mdv2010.1
++ Revision: 499176
+- Force rebuild
+
+  + Tomasz Pawel Gajc <tpg@mandriva.org>
+    - update to new version R13B03
+    - drop patch 4 fixed upstream
+    - add new subpackage erl_docgen
+
+* Sun Nov 08 2009 Tomasz Pawel Gajc <tpg@mandriva.org> R13B02-1mdv2010.1
++ Revision: 463103
+- disable patch 1
+- drop a lot of version defines, use wildcards instread of
+- update to new version R13B02
+- Patch4: fix reltool, patch from upstream
+
+* Tue Jun 16 2009 Tomasz Pawel Gajc <tpg@mandriva.org> R13B01-1mdv2010.0
++ Revision: 386493
+- update to new version R13B01
+- fix license
+- Patch2: rediff
+- two new subpackages erlang-reltools and erlang-wx
+- add buildrequires on wxgtku-devel
+- disable parallel make
+- build with -m64 on x86_64
+- update to new version R13B01
+
+* Sat Feb 28 2009 Guillaume Rousse <guillomovitch@mandriva.org> R12B5-4mdv2009.1
++ Revision: 346097
+- fix format errors
+
+  + Tomasz Pawel Gajc <tpg@mandriva.org>
+    - own missing dir
+
+* Fri Dec 05 2008 Adam Williamson <awilliamson@mandriva.org> R12B5-2mdv2009.1
++ Revision: 310152
+- rebuild for new tcl
+
+* Sat Nov 22 2008 Tomasz Pawel Gajc <tpg@mandriva.org> R12B5-1mdv2009.1
++ Revision: 305631
+- update to new release R12B-5
+- add new subpackages eunit and public_key
+
+* Thu Sep 04 2008 Tomasz Pawel Gajc <tpg@mandriva.org> R12B4-1mdv2009.0
++ Revision: 280749
+- __cputoolize is still needed :(
+- drop patch 3, fixed upstream
+- disable __cputoolize
+- update to new release R12B-4
+- compress sources with lzma
+- disable buildrequires on java-gcj-compat-devel
+
+* Mon Jun 16 2008 Tomasz Pawel Gajc <tpg@mandriva.org> R12B3-1mdv2009.0
++ Revision: 219352
+- merge rpath and sslrpatch patches into patch 2
+- Patch3: fix glibc version
+- disable strict-aliasing
+- enable dynamic linking for ssl
+- use macro for configure script
+- update to new version R12B-3
+
+  + Pixel <pixel@mandriva.com>
+    - do not call ldconfig in %%post/%%postun, it is now handled by filetriggers
+
+* Sun May 04 2008 Tomasz Pawel Gajc <tpg@mandriva.org> R12B2-2mdv2009.0
++ Revision: 201009
+- fix ESS script (#39562)
+
+* Tue Apr 22 2008 Tomasz Pawel Gajc <tpg@mandriva.org> R12B2-1mdv2009.0
++ Revision: 196412
+- new version
+
+* Wed Feb 27 2008 Tomasz Pawel Gajc <tpg@mandriva.org> R12B1-1mdv2008.1
++ Revision: 175750
+- add buildrequires on libgd2-devel
+- make it build
+- add more symlinks to %%_bindir
+- new version
+- drop not applied patch 5
+- get rid of buildroot inside erlang files
+- new versioning
+
+* Mon Feb 18 2008 Thierry Vignaud <tv@mandriva.org> R12B-7mdv2008.1
++ Revision: 170819
+- rebuild
+- fix "foobar is blabla" summary (=> "blabla") so that it looks nice in rpmdrake
+- fix description-line-too-long
+
+* Tue Feb 05 2008 Tomasz Pawel Gajc <tpg@mandriva.org> R12B-6mdv2008.1
++ Revision: 162904
+- enable dynamic linking for ssl
+
+* Tue Jan 29 2008 Tomasz Pawel Gajc <tpg@mandriva.org> R12B-5mdv2008.1
++ Revision: 160002
+- fix requires for erlang-edoc
+
+* Sun Jan 27 2008 Tomasz Pawel Gajc <tpg@mandriva.org> R12B-4mdv2008.1
++ Revision: 158782
+- fix requires for erlang-edoc, this closes mdv bug #37227
+
+* Mon Jan 07 2008 Tomasz Pawel Gajc <tpg@mandriva.org> R12B-3mdv2008.1
++ Revision: 146344
+- remove redundant provides on subpackages
+- obsolete erlang-mnesia_session and erlang-mnemosyne - gone with the upstream wind
+
+  + Olivier Blin <blino@mandriva.org>
+    - restore BuildRoot
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+
+* Sun Dec 16 2007 Anssi Hannula <anssi@mandriva.org> R12B-2mdv2008.1
++ Revision: 120808
+- buildrequires java-rpmbuild
+
+  + Tomasz Pawel Gajc <tpg@mandriva.org>
+    - add missing buildrequires
+    - subpackages mnesia_session and mnemosyne are gone
+    - welcome common_test, percept and test_server subpackages
+    - move man files to the %%{_mandir}
+    - new version
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - fix summary-ended-with-dot
+
+* Sat Sep 29 2007 Pascal Terjan <pterjan@mandriva.org> R11B-11mdv2008.0
++ Revision: 93867
+- Don't provide emacs...
+
+* Tue Aug 21 2007 Tomasz Pawel Gajc <tpg@mandriva.org> R11B-10mdv2008.0
++ Revision: 68696
+- provide emacs support (bug #32318)
+- man pages are now compressed with lzma
+- remove some dead entries in spec file
+- own missing dirs
+
+* Sun Jul 08 2007 Tomasz Pawel Gajc <tpg@mandriva.org> R11B-9mdv2008.0
++ Revision: 49833
+- use %%serverbuild macro
+- fix bug #31636
+- correct summary and description for erlang-hipe
+
+* Sun Jun 17 2007 Tomasz Pawel Gajc <tpg@mandriva.org> R11B-8mdv2008.0
++ Revision: 40525
+- fix typo in requires
+
+* Sat Jun 16 2007 Tomasz Pawel Gajc <tpg@mandriva.org> R11B-7mdv2008.0
++ Revision: 40379
+- adjust modules versions
+- new module docbuilder
+- requires tcl
+- use distro conditional -fstack-protector
+- enable smp support
+- new version
+- update documentation
+
+* Sun Apr 29 2007 Tomasz Pawel Gajc <tpg@mandriva.org> R11B-6mdv2008.0
++ Revision: 19311
+- update to erlang-R11B-4
+- disable P0
+- spec file clean :(
+
+
+* Sat Sep 30 2006 Michael Scherer <misc@mandriva.org> R11B-5mdv2007.0
++ Revision: 62756
+- fix build on x86_64
+- add a switch for building without java
+- do not requires java in erlang-stack if it was not built
+- Import erlang
 

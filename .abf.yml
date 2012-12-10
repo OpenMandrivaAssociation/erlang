@@ -1,4 +1,4 @@
 sources:
-  "otp_doc_html_R14B04.tar.gz:"	86f76adee9bf953e5578d7998fda9e7dfc0d43f5
-  "otp_doc_man_R14B04.tar.gz:"	41f4ea59c9622e39b30882e173983252b6faca81
-  "otp_src_R14B04.tar.gz:"	e469c20c8be6c51bb584a2dec235c4714a60b4db
+  otp_doc_html_R15B03.tar.gz: ff866b07d217f48ee6253fdbed956be5ebf3cb9d
+  otp_doc_man_R15B03.tar.gz: a0ea6cc389b208c2a75ffb0027e143afc33c40b3
+  otp_src_R15B03.tar.gz: c8d9cceb40d5b310c66352c2fe221f4504d366f3
