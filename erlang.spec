@@ -9,7 +9,7 @@
 Summary:	General-purpose programming language and runtime environment
 Name:		erlang
 Version:	%(echo %realver | sed -e 's/-//')
-Release:	%mkrel 1
+Release:	2
 Group:		Development/Other
 License:	MPL
 URL:		http://www.erlang.org
@@ -26,7 +26,7 @@ BuildRequires:	unixODBC-devel
 BuildRequires:	tcl-devel
 BuildRequires:	tk-devel
 %if %build_java
-BuildRequires:  java-rpmbuild
+BuildRequires:	java-rpmbuild
 %endif
 BuildRequires:	flex
 BuildRequires:	bison
@@ -785,6 +785,9 @@ rm -rf %{buildroot}%{_datadir}/COPYRIGHT
 rm -rf %{buildroot}%{_datadir}/PR.template
 rm -rf %{buildroot}%{_datadir}/README
 
+# (tpg) remove this manpages as they conflicts with openssl
+rm -rf %{buildroot}%{_mandir}/man3/{crypto.3.*,ssl.3.*}
+
 %post -n %{name}-base
 %{_libdir}/erlang/Install -minimal %{_libdir}/erlang >/dev/null 2>/dev/null
 
@@ -798,6 +801,7 @@ rm -rf %{buildroot}%{_datadir}/README
 %dir %{_libdir}/erlang/bin
 %dir %{_libdir}/erlang/lib
 %dir %{_libdir}/erlang/misc
+
 %{_bindir}/*
 %{_libdir}/erlang/Install
 %{_libdir}/erlang/bin/ct_run
