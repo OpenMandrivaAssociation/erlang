@@ -786,22 +786,19 @@ rm -rf %{buildroot}%{_datadir}/PR.template
 rm -rf %{buildroot}%{_datadir}/README
 
 # (tpg) remove this manpages as they conflicts with openssl
-rm -rf %{buildroot}%{_mandir}/man3/{crypto.3.*,ssl.3.*}
+rm -rf %{buildroot}%{_mandir}/man3/{crypto.3.*,ssl.3.*,zlib.3.*}
 
 %post -n %{name}-base
 %{_libdir}/erlang/Install -minimal %{_libdir}/erlang >/dev/null 2>/dev/null
 
 %files -n %{name}-stack
-%defattr(-,root,root)
 %doc AUTHORS EPLICENCE README.md
 
 %files -n %{name}-base
-%defattr(-,root,root)
 %dir %{_libdir}/erlang
 %dir %{_libdir}/erlang/bin
 %dir %{_libdir}/erlang/lib
 %dir %{_libdir}/erlang/misc
-
 %{_bindir}/*
 %{_libdir}/erlang/Install
 %{_libdir}/erlang/bin/ct_run
@@ -828,7 +825,6 @@ rm -rf %{buildroot}%{_mandir}/man3/{crypto.3.*,ssl.3.*}
 %{erlang_libdir}/sasl-*
 
 %files -n %{name}-devel
-%defattr(-,root,root)
 %dir %{_libdir}/%{name}/%{_includedir}
 %dir %{_libdir}/%{name}/%{_prefix}/lib
 %{_libdir}/%{name}/%{_includedir}/*
@@ -839,220 +835,167 @@ rm -rf %{buildroot}%{_mandir}/man3/{crypto.3.*,ssl.3.*}
 %{erlang_libdir}/appmon-*
 
 %files -n %{name}-asn1
-%defattr(-,root,root)
 %{erlang_libdir}/asn1-*
 
 %files -n %{name}-compiler
-%defattr(-,root,root)
 %{erlang_libdir}/compiler-*
 
 %files -n %{name}-common_test
-%defattr(-,root,root)
 %{erlang_libdir}/common_test-*
 
 %files -n %{name}-cosEvent
-%defattr(-,root,root)
 %{erlang_libdir}/cosEvent-*
 
 %files -n %{name}-cosEventDomain
-%defattr(-,root,root)
 %{erlang_libdir}/cosEventDomain-*
 
 %files -n %{name}-cosFileTransfer
-%defattr(-,root,root)
 %{erlang_libdir}/cosFileTransfer-*
 
 %files -n %{name}-cosNotification
-%defattr(-,root,root)
 %{erlang_libdir}/cosNotification-*
 
 %files -n %{name}-cosProperty
-%defattr(-,root,root)
 %{erlang_libdir}/cosProperty-*
 
 %files -n %{name}-cosTime
-%defattr(-,root,root)
 %{erlang_libdir}/cosTime-*
 
 %files -n %{name}-cosTransactions
-%defattr(-,root,root)
 %{erlang_libdir}/cosTransactions-*
 
 %files -n %{name}-crypto
-%defattr(-,root,root)
 %{erlang_libdir}/crypto-*
 
 %files -n %{name}-debugger
-%defattr(-,root,root)
 %{erlang_libdir}/debugger-*
 
 %files -n %{name}-dialyzer
-%defattr(-,root,root)
 %{erlang_libdir}/dialyzer-*
 %{_libdir}/%{name}/bin/dialyzer
 
 %files -n %{name}-diameter
-%defattr(-,root,root)
 %{erlang_libdir}/diameter-*
 
 %files -n %{name}-edoc
-%defattr(-,root,root)
 %{erlang_libdir}/edoc-*
 
 %files -n %{name}-eldap
-%defattr(-,root,root)
 %{erlang_libdir}/eldap-*
 
 %files -n %{name}-emacs
-%defattr(-,root,root)
 %{_sysconfdir}/emacs/site-start.d/erlang.el
 
 %files -n %{name}-erl_docgen
-%defattr(-,root,root)
 %{erlang_libdir}/erl_docgen-*
 
 %files -n %{name}-erl_interface
-%defattr(-,root,root)
 %{erlang_libdir}/erl_interface-*
 
 %files -n %{name}-et
-%defattr(-,root,root)
 %{erlang_libdir}/et-*
 
 %files -n %{name}-eunit
-%defattr(-,root,root)
 %{erlang_libdir}/eunit-*
 
 %files -n %{name}-gs
-%defattr(-,root,root)
 %{erlang_libdir}/gs-*
 
 %files -n %{name}-hipe
-%defattr(-,root,root)
 %{erlang_libdir}/hipe-*
 
 %files -n %{name}-ic
-%defattr(-,root,root)
 %{erlang_libdir}/ic-*
 
 %files -n %{name}-inets
-%defattr(-,root,root)
 %{erlang_libdir}/inets-*
 
 %files -n %{name}-inviso
-%defattr(-,root,root)
 %{erlang_libdir}/inviso-*
 
 %if %build_java
 %files -n %{name}-jinterface
-%defattr(-,root,root)
 %{erlang_libdir}/jinterface-*/priv/OtpErlang.jar
 %{erlang_libdir}/jinterface-*/java_src/com/ericsson/otp/erlang/*
 %endif
 
 %files -n %{name}-manpages
-%defattr(-,root,root)
 %{_mandir}/*/*
 
 %files -n %{name}-megaco
-%defattr(-,root,root)
 %{erlang_libdir}/megaco-*
 
 %files -n %{name}-mnesia
-%defattr(-,root,root)
 %{erlang_libdir}/mnesia-*
 
 %files -n %{name}-observer
-%defattr(-,root,root)
 %{erlang_libdir}/observer-*
 
 %files -n %{name}-odbc
-%defattr(-,root,root)
 %{erlang_libdir}/odbc-*
 
 %files -n %{name}-orber
-%defattr(-,root,root)
 %{erlang_libdir}/orber-*
 
 %files -n %{name}-os_mon
-%defattr(-,root,root)
 %{erlang_libdir}/os_mon-*
 
 %files -n %{name}-otp_mibs
-%defattr(-,root,root)
 %{erlang_libdir}/otp_mibs-*
 
 %files -n %{name}-parsetools
-%defattr(-,root,root)
 %{erlang_libdir}/parsetools-*
 
 %files -n %{name}-percept
-%defattr(-,root,root)
 %{erlang_libdir}/percept-*
 
 %files -n %{name}-pman
-%defattr(-,root,root)
 %{erlang_libdir}/pman-*
 
 %files -n %{name}-public_key
-%defattr(-,root,root)
 %{erlang_libdir}/public_key-*
 
 %files -n %{name}-reltool
-%defattr(-,root,root)
 %{erlang_libdir}/reltool-*
 
 %files -n %{name}-runtime_tools
-%defattr(-,root,root)
 %{erlang_libdir}/runtime_tools-*
 
 %files -n %{name}-snmp
-%defattr(-,root,root)
 %{erlang_libdir}/snmp-*
 
 %files -n %{name}-ssh
-%defattr(-,root,root)
 %{erlang_libdir}/ssh-*
 
 %files -n %{name}-ssl
-%defattr(-,root,root)
 %{erlang_libdir}/ssl-*
 
 %files -n %{name}-syntax_tools
-%defattr(-,root,root)
 %{erlang_libdir}/syntax_tools-*
 
 %files -n %{name}-test_server
-%defattr(-,root,root)
 %{erlang_libdir}/test_server-*
 
 %files -n %{name}-toolbar
-%defattr(-,root,root)
 %{erlang_libdir}/toolbar-*
 
 %files -n %{name}-tools
-%defattr(-,root,root)
 %{erlang_libdir}/tools-*
 
 %files -n %{name}-typer
-%defattr(-,root,root)
 %{erlang_libdir}/typer-*
 %{_libdir}/%{name}/bin/typer
 
 %files -n %{name}-tv
-%defattr(-,root,root)
 %{erlang_libdir}/tv-*
 
 %files -n %{name}-webtool
-%defattr(-,root,root)
 %{erlang_libdir}/webtool-*
 
 %files -n %{name}-wx
-%defattr(-,root,root)
 %{erlang_libdir}/wx-*
 
 %files -n %{name}-xmerl
-%defattr(-,root,root)
 %{erlang_libdir}/xmerl-*
 
 
