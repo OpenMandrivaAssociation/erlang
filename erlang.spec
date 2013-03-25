@@ -9,7 +9,7 @@
 Summary:	General-purpose programming language and runtime environment
 Name:		erlang
 Version:	%(echo %realver | sed -e 's/-//')
-Release:	2
+Release:	3
 Group:		Development/Other
 License:	MPL
 URL:		http://www.erlang.org
@@ -786,7 +786,9 @@ rm -rf %{buildroot}%{_datadir}/PR.template
 rm -rf %{buildroot}%{_datadir}/README
 
 # (tpg) remove this manpages as they conflicts with openssl
-rm -rf %{buildroot}%{_mandir}/man3/{crypto.3.*,ssl.3.*,zlib.3.*}
+rm -rf %{buildroot}%{_mandir}/man3/ssl.3.*
+rm -rf %{buildroot}%{_mandir}/man3/crypto.3.*
+rm -rf %{buildroot}%{_mandir}/man3/zlib.3.*
 
 %post -n %{name}-base
 %{_libdir}/erlang/Install -minimal %{_libdir}/erlang >/dev/null 2>/dev/null
