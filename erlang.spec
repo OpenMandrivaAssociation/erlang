@@ -9,7 +9,7 @@
 Summary:	General-purpose programming language and runtime environment
 Name:		erlang
 Version:	%(echo %realver | sed -e 's/-//')
-Release:	3
+Release:	4
 Group:		Development/Other
 License:	MPL
 URL:		http://www.erlang.org
