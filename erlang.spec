@@ -4,22 +4,24 @@
 %{expand: %{?_without_java: %%global build_java 0}}
 
 %define erlang_libdir %{_libdir}/erlang/lib
-%define realver R15B03
+%define realver 20.0
 
 Summary:	General-purpose programming language and runtime environment
 Name:		erlang
 Version:	%(echo %realver | sed -e 's/-//')
-Release:	4
+Release:	5
 Group:		Development/Other
 License:	MPL
 URL:		http://www.erlang.org
 Source0:	http://www.erlang.org/download/otp_src_%{realver}.tar.gz
 Source1:	http://www.erlang.org/download/otp_doc_html_%{realver}.tar.gz
 Source2:	http://www.erlang.org/download/otp_doc_man_%{realver}.tar.gz
-# fix linking by removing --no-undefined from WX_LIBS
-Patch4:		R14B03-remove-no-udefined-from-wx.patch
+Source3:	erlang.rpmlintrc
+Patch1:		fix-misdetection-of-clang-compiler.patch
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel
+BuildRequires:	mesa-common-devel
+BuildRequires:	libwxgtku2.8-devel
 # needed for configure test
 BuildRequires:	openssl
 BuildRequires:	unixODBC-devel
@@ -30,13 +32,13 @@ BuildRequires:	java-rpmbuild
 %endif
 BuildRequires:	flex
 BuildRequires:	bison
-BuildRequires:	libgd-devel
+BuildRequires:	pkgconfig(gdlib)
 %if %mdkversion < 201100
 BuildRequires:	valgrind
 %else
 BuildRequires:	valgrind-devel
 %endif
-BuildRequires:	libgd-devel
+BuildRequires:	pkgconfig(gdlib)
 BuildRequires:	m4
 BuildRequires:	wxgtku-devel
 Requires:	tk
@@ -709,12 +711,17 @@ a few bugs in the scanner, and improves HTML export.
 
 %prep
 %setup -qn otp_src_%{realver}
-%patch4 -p1 -b .no-undefined
+%patch1 -p0
+autoreconf -f %{_builddir}/otp_src_%{realver}/erts/configure.in
 
 %build
 %serverbuild
-export CFLAGS="%{optflags} -fno-strict-aliasing"
+export CC=/usr/bin/clang
+export CFLAGS="%{optflags} -fno-strict-aliasing -fno-lto"
 export CXXLAGS=$CFLAGS
+export LD=/usr/bin/lld
+#xport JAVAC=/usr/bin/javacc.sh
+
 ERL_TOP=`pwd`; export ERL_TOP
 
 # enable dynamic linking for ssl
@@ -722,7 +729,7 @@ sed -i 's|SSL_DYNAMIC_ONLY=no|SSL_DYNAMIC_ONLY=yes|' erts/configure
 #define __cputoolize true
 %define _disable_ld_no_undefined 1
 
-%configure2_5x \
+%configure \
 	--prefix=%{_prefix} \
 	--exec-prefix=%{_prefix} \
 	--bindir=%{_bindir} \
@@ -739,8 +746,8 @@ sed -i 's|SSL_DYNAMIC_ONLY=no|SSL_DYNAMIC_ONLY=yes|' erts/configure
 	--with-ssl \
 	--disable-erlang-mandir \
 	--enable-dynamic-ssl-lib
-
-%make -j1
+	
+%make 
 
 %install
 
@@ -784,6 +791,7 @@ popd
 rm -rf %{buildroot}%{_datadir}/COPYRIGHT
 rm -rf %{buildroot}%{_datadir}/PR.template
 rm -rf %{buildroot}%{_datadir}/README
+rm -rf %{buildroot}%{_datadir}/README.md
 
 # (tpg) remove this manpages as they conflicts with openssl
 rm -rf %{buildroot}%{_mandir}/man3/ssl.3.*
@@ -794,7 +802,7 @@ rm -rf %{buildroot}%{_mandir}/man3/zlib.3.*
 %{_libdir}/erlang/Install -minimal %{_libdir}/erlang >/dev/null 2>/dev/null
 
 %files -n %{name}-stack
-%doc AUTHORS EPLICENCE README.md
+%doc AUTHORS README.md
 
 %files -n %{name}-base
 %dir %{_libdir}/erlang
@@ -812,12 +820,13 @@ rm -rf %{buildroot}%{_mandir}/man3/zlib.3.*
 %{_libdir}/erlang/bin/start.script
 %{_libdir}/erlang/bin/start_clean.boot
 %{_libdir}/erlang/bin/start_sasl.boot
+%{_libdir}/erlang/bin/no_dot_erlang.boot
 %{_libdir}/erlang/erts-*
 %{_libdir}/erlang/misc/format_man_pages
 %{_libdir}/erlang/misc/makewhatis
 %{_libdir}/erlang/releases
 %{_libdir}/erlang/bin/run_erl
-%{_libdir}/erlang/bin/run_test
+#%%{_libdir}/erlang/bin/run_test
 %{_libdir}/erlang/bin/start
 %{_libdir}/erlang/bin/start_erl
 %{_libdir}/erlang/bin/to_erl
@@ -832,9 +841,9 @@ rm -rf %{buildroot}%{_mandir}/man3/zlib.3.*
 %{_libdir}/%{name}/%{_includedir}/*
 %{_libdir}/%{name}/%{_prefix}/lib/*
 
-%files -n %{name}-appmon
-%defattr(-,root,root)
-%{erlang_libdir}/appmon-*
+#%%files -n %{name}-appmon
+#%%defattr(-,root,root)
+#%%{erlang_libdir}/appmon-*
 
 %files -n %{name}-asn1
 %{erlang_libdir}/asn1-*
@@ -900,8 +909,8 @@ rm -rf %{buildroot}%{_mandir}/man3/zlib.3.*
 %files -n %{name}-eunit
 %{erlang_libdir}/eunit-*
 
-%files -n %{name}-gs
-%{erlang_libdir}/gs-*
+#%%files -n %{name}-gs
+#%%{erlang_libdir}/gs-*
 
 %files -n %{name}-hipe
 %{erlang_libdir}/hipe-*
@@ -912,13 +921,15 @@ rm -rf %{buildroot}%{_mandir}/man3/zlib.3.*
 %files -n %{name}-inets
 %{erlang_libdir}/inets-*
 
-%files -n %{name}-inviso
-%{erlang_libdir}/inviso-*
+#%%files -n %{name}-inviso
+#%%{erlang_libdir}/inviso-*
 
 %if %build_java
 %files -n %{name}-jinterface
 %{erlang_libdir}/jinterface-*/priv/OtpErlang.jar
 %{erlang_libdir}/jinterface-*/java_src/com/ericsson/otp/erlang/*
+%{erlang_libdir}/jinterface-*/ebin/jinterface.app
+%{erlang_libdir}/jinterface-*/ebin/jinterface.appup
 %endif
 
 %files -n %{name}-manpages
@@ -948,11 +959,11 @@ rm -rf %{buildroot}%{_mandir}/man3/zlib.3.*
 %files -n %{name}-parsetools
 %{erlang_libdir}/parsetools-*
 
-%files -n %{name}-percept
-%{erlang_libdir}/percept-*
+#%%files -n %{name}-percept
+#%%{erlang_libdir}/percept-*
 
-%files -n %{name}-pman
-%{erlang_libdir}/pman-*
+#%%files -n %{name}-pman
+#%%{erlang_libdir}/pman-*
 
 %files -n %{name}-public_key
 %{erlang_libdir}/public_key-*
@@ -975,24 +986,24 @@ rm -rf %{buildroot}%{_mandir}/man3/zlib.3.*
 %files -n %{name}-syntax_tools
 %{erlang_libdir}/syntax_tools-*
 
-%files -n %{name}-test_server
-%{erlang_libdir}/test_server-*
+#%%files -n %{name}-test_server
+#%%{erlang_libdir}/test_server-*
 
-%files -n %{name}-toolbar
-%{erlang_libdir}/toolbar-*
+#%%files -n %{name}-toolbar
+#%%{erlang_libdir}/toolbar-*
 
 %files -n %{name}-tools
 %{erlang_libdir}/tools-*
 
 %files -n %{name}-typer
-%{erlang_libdir}/typer-*
+#%%{erlang_libdir}/typer-*
 %{_libdir}/%{name}/bin/typer
 
-%files -n %{name}-tv
-%{erlang_libdir}/tv-*
+#%%files -n %{name}-tv
+#%%{erlang_libdir}/tv-*
 
-%files -n %{name}-webtool
-%{erlang_libdir}/webtool-*
+#%%files -n %{name}-webtool
+#%%{erlang_libdir}/webtool-*
 
 %files -n %{name}-wx
 %{erlang_libdir}/wx-*
