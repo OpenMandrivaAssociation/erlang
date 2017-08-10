@@ -1,0 +1,19 @@
+--- erts/configure.in~	2017-06-20 19:56:09.037064000 +0100
++++ erts/configure.in	2017-07-29 02:02:38.639529358 +0100
+@@ -1905,6 +1905,7 @@
+ fi
+ AC_SUBST(BITS64)
+ 
++if test "$CC" != "/usr/bin/clang"; then
+ if test "x$ac_compiler_gnu" = "xyes"; then
+ AC_MSG_CHECKING([if we should add -fno-tree-copyrename to CFLAGS for computed gotos to work properly])
+ AC_TRY_COMPILE([],[
+@@ -1923,7 +1924,7 @@
+ else
+ 	AC_MSG_RESULT(no)
+ fi
+-
++fi
+ 
+ 
+ AC_MSG_CHECKING([for broken gcc-4.3.0 compiler])
