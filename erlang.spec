@@ -29,6 +29,7 @@ BuildRequires:	tcl-devel
 BuildRequires:	tk-devel
 %if %build_java
 BuildRequires:	java-rpmbuild
+BuildRequires:  java-1.8.0-openjdk-devel
 %endif
 BuildRequires:	flex
 BuildRequires:	bison
