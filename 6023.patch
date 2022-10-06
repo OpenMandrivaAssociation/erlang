@@ -1,0 +1,37 @@
+From 7a4bd92bcddc948c8e6079d6dfc2631594141ac7 Mon Sep 17 00:00:00 2001
+From: Kenji Rikitake <kenji.rikitake@acm.org>
+Date: Thu, 26 May 2022 06:14:51 +0000
+Subject: [PATCH] experimental: fix AddTool bug
+
+* Add additional type casting to wxToolBar_AddTool_4() as a workaround
+  for compilation error on gcc 11.2.0 of Ubuntu
+  - wxBitmapBundle is introduced since wxWidgets 3.1.6
+  - wxBitmap is assignble to wxBitmapBundle object
+    - See https://docs.wxwidgets.org/3.1.6/classwx_bitmap_bundle.html,
+      quote:
+
+> Also note that the existing code using wxBitmap is compatible with the functions taking wxBitmapBundle in wxWidgets 3.1.6 and later because bitmaps are implicitly convertible to the objects of this class, so just passing wxBitmap to the functions taking wxBitmapBundle continues to work and if high resolution versions of bitmap are not (yet) available for the other toolbar tools, single bitmaps can continue to be used instead.
+
+* See also https://github.com/erlang/otp/issues/6022
+---
+ lib/wx/c_src/gen/wxe_wrapper_7.cpp | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/lib/wx/c_src/gen/wxe_wrapper_7.cpp b/lib/wx/c_src/gen/wxe_wrapper_7.cpp
+index f4716e1228bc..f598ed9c71ba 100644
+--- a/lib/wx/c_src/gen/wxe_wrapper_7.cpp
++++ b/lib/wx/c_src/gen/wxe_wrapper_7.cpp
+@@ -2339,7 +2339,13 @@ void wxToolBar_AddTool_4(WxeApp *app, wxeMemEnv *memenv, wxeCommand& Ecmd)
+     } else        Badarg("Options");
+   };
+   if(!This) throw wxe_badarg("This");
++// AddTool() type check workaround
++// See https://docs.wxwidgets.org/3.1.6/classwx_bitmap_bundle.html
++#if wxCHECK_VERSION(3,1,6)
++  wxToolBarToolBase * Result = (wxToolBarToolBase*)This->AddTool(toolId,label,(wxBitmapBundle)*bitmap,shortHelp,kind);
++#else // wx Version < 3.1.6
+   wxToolBarToolBase * Result = (wxToolBarToolBase*)This->AddTool(toolId,label,*bitmap,shortHelp,kind);
++#endif // wxCHECK_VERSION(3,1,6)
+   wxeReturn rt = wxeReturn(memenv, Ecmd.caller, true);
+   rt.send(  rt.make_ref(app->getRef((void *)Result,memenv), "wx"));
+ 

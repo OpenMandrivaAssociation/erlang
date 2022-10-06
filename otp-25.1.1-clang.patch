@@ -1,0 +1,32 @@
+diff -up otp_src_25.1.1/erts/emulator/beam/erl_drv_nif.h.omv~ otp_src_25.1.1/erts/emulator/beam/erl_drv_nif.h
+--- otp_src_25.1.1/erts/emulator/beam/erl_drv_nif.h.omv~	2022-10-05 18:14:34.563120935 +0200
++++ otp_src_25.1.1/erts/emulator/beam/erl_drv_nif.h	2022-10-05 18:15:22.158334656 +0200
+@@ -201,7 +201,11 @@ typedef struct {
+          __attribute__((malloc)) ERL_NAPI_ATTR_ALLOC_SIZE(SZPOS)
+ 
+ #    undef  ERL_NAPI_ATTR_MALLOC_D
+-#    if defined(__GNUC__) && __GNUC__ >= 11
++#    if defined(__clang__)
++#      define ERL_NAPI_ATTR_MALLOC_D(DTOR, PTRPOS)                         \
++         __attribute__((malloc))                                           \
++         ERL_NAPI_ATTR_WUR
++#    elif defined(__GNUC__) && __GNUC__ >= 11
+ #      define ERL_NAPI_ATTR_MALLOC_D(DTOR, PTRPOS)                         \
+          __attribute__((malloc(DTOR,PTRPOS)))                              \
+          ERL_NAPI_ATTR_WUR
+diff -up otp_src_25.1.1/erts/emulator/beam/sys.h.omv~ otp_src_25.1.1/erts/emulator/beam/sys.h
+--- otp_src_25.1.1/erts/emulator/beam/sys.h.omv~	2022-10-05 18:40:23.634173465 +0200
++++ otp_src_25.1.1/erts/emulator/beam/sys.h	2022-10-05 18:40:48.302342745 +0200
+@@ -1408,7 +1408,11 @@ erts_raw_env_next_char(byte *p, int enco
+          ERTS_ATTR_WUR
+ 
+ #    undef  ERTS_ATTR_MALLOC_D
+-#    if defined(__GNUC__) && __GNUC__ >= 11
++#    if defined(__clang__)
++#      define ERTS_ATTR_MALLOC_D(DTOR, PTRPOS)                         \
++         __attribute__((malloc))                                       \
++         ERTS_ATTR_WUR
++#    elif defined(__GNUC__) && __GNUC__ >= 11
+ #      define ERTS_ATTR_MALLOC_D(DTOR, PTRPOS)                         \
+          __attribute__((malloc(DTOR,PTRPOS)))                          \
+          ERTS_ATTR_WUR
