@@ -11,7 +11,7 @@ Version:	25.1.1
 Release:	1
 Group:		Development/Other
 License:	MPL
-URL:		http://www.erlang.org
+URL:		https://www.erlang.org
 Source0:	https://github.com/erlang/otp/releases/download/OTP-%{version}/otp_src_%{version}.tar.gz
 Source1:	https://github.com/erlang/otp/releases/download/OTP-%{version}/otp_doc_html_%{version}.tar.gz
 Source2:	https://github.com/erlang/otp/releases/download/OTP-%{version}/otp_doc_man_%{version}.tar.gz
