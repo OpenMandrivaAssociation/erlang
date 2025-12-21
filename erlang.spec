@@ -19,6 +19,11 @@ Patch0:		otp-25.1.1-clang.patch
 Patch1:		https://github.com/erlang/otp/pull/6023.patch
 # fix linking by removing --no-undefined from WX_LIBS
 #Patch4:		R14B03-remove-no-udefined-from-wx.patch
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	pkgconfig(ncursesw)
 BuildRequires:	pkgconfig(libssl)
 # needed for configure test
