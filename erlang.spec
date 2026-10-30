@@ -7,7 +7,7 @@
 
 Summary:	General-purpose programming language and runtime environment
 Name:		erlang
-Version:	25.1.1
+Version:	29.1.2
 Release:	1
 Group:		Development/Other
 License:	MPL
@@ -15,13 +15,11 @@ URL:		https://www.erlang.org
 Source0:	https://github.com/erlang/otp/releases/download/OTP-%{version}/otp_src_%{version}.tar.gz
 Source1:	https://github.com/erlang/otp/releases/download/OTP-%{version}/otp_doc_html_%{version}.tar.gz
 Source2:	https://github.com/erlang/otp/releases/download/OTP-%{version}/otp_doc_man_%{version}.tar.gz
-Patch0:		otp-25.1.1-clang.patch
-Patch1:		https://github.com/erlang/otp/pull/6023.patch
-# fix linking by removing --no-undefined from WX_LIBS
-#Patch4:		R14B03-remove-no-udefined-from-wx.patch
+# Clang 23 advertises __GNUC__ >= 11 and then rejects the two-argument
+# malloc attribute that header uses for GCC.
+Patch0:		otp-29.1.2-clang.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	libtool-base
 BuildRequires:	slibtool
 BuildRequires:	make
 BuildRequires:	pkgconfig(ncursesw)
@@ -64,7 +62,6 @@ Requires:	erlang-diameter
 Requires:	erlang-edoc
 Requires:	erlang-eldap
 Requires:	erlang-emacs
-Requires:	erlang-erl_docgen
 Requires:	erlang-erl_interface
 Requires:	erlang-et
 Requires:	erlang-eunit
@@ -259,15 +256,6 @@ Group:		Development/Other
 Debugger is a graphical tool which can be used for debugging and testing
 of Erlang programs. For example, breakpoints can be set, code can be single
 stepped and variable values can be displayed and changed.
-
-%package erl_docgen
-Summary:	Documentation generator
-License:	MPL
-Requires:	%{name}-base = %{version}-%{release}
-Group:		Development/Other
-
-%description erl_docgen
-Documentation generator for erlang.
 
 %package erl_interface
 Summary:	Low level interface to C
@@ -494,9 +482,6 @@ export CFLAGS="%{optflags} -fno-strict-aliasing"
 export CXXLAGS=$CFLAGS
 ERL_TOP=`pwd`; export ERL_TOP
 
-# enable dynamic linking for ssl
-sed -i 's|SSL_DYNAMIC_ONLY=no|SSL_DYNAMIC_ONLY=yes|' erts/configure
-#define __cputoolize true
 %define _disable_ld_no_undefined 1
 
 %configure2_5x \
@@ -509,14 +494,11 @@ sed -i 's|SSL_DYNAMIC_ONLY=no|SSL_DYNAMIC_ONLY=yes|' erts/configure
 	%ifarch x86_64
 	--enable-m64-build \
 	%endif
-	--enable-threads \
 	--enable-kernel-poll \
-	--enable-smp-support \
 	--with-ssl \
-	--disable-erlang-mandir \
 	--enable-dynamic-ssl-lib
 
-%make -j1
+%make
 
 %install
 
@@ -639,9 +621,6 @@ rm -rf %{buildroot}%{_mandir}/man3/zlib.3.*
 
 %files emacs
 %{_sysconfdir}/emacs/site-start.d/erlang.el
-
-%files erl_docgen
-%{erlang_libdir}/erl_docgen-*
 
 %files erl_interface
 %{erlang_libdir}/erl_interface-*
