@@ -192,7 +192,9 @@ Summary:	Emacs support for The Erlang language
 License:	GPL
 Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
-Requires:	emacs
+# Emacs is not in cooker. A hard Requires makes this subpackage, and
+# erlang-stack which pulls it in, uninstallable in extra tests.
+Suggests:	emacs
 
 %description emacs
 This module provides Erlang support to Emacs.
