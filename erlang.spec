@@ -4,13 +4,14 @@
 %{expand: %{?_without_java: %%global build_java 0}}
 
 %define erlang_libdir %{_libdir}/erlang/lib
+%define erl_usrdn lib
 
 Summary:	General-purpose programming language and runtime environment
 Name:		erlang
 Version:	29.1.2
 Release:	1
 Group:		Development/Other
-License:	MPL
+License:	Apache-2.0
 URL:		https://www.erlang.org
 Source0:	https://github.com/erlang/otp/releases/download/OTP-%{version}/otp_src_%{version}.tar.gz
 Source1:	https://github.com/erlang/otp/releases/download/OTP-%{version}/otp_doc_html_%{version}.tar.gz
@@ -49,7 +50,7 @@ systems from Ericsson.
 
 %package stack
 Summary:	Erlang bundle
-License:	MPL
+License:	Apache-2.0
 Group:		Development/Other
 Requires:	erlang-base = %{version}-%{release}
 Requires:	erlang-asn1
@@ -102,7 +103,7 @@ Includes the Erlang/OTP graphical libraries.
 
 %package base
 Summary:	Erlang architecture independent files
-License:	MPL
+License:	Apache-2.0
 Group:		Development/Other
 Provides:	%{name} = %{version}-%{release}
 Obsoletes:	%{name}_otp
@@ -121,7 +122,7 @@ Includes the Erlang/OTP graphical libraries.
 
 %package devel
 Summary:	Erlang header
-License:	MPL
+License:	Apache-2.0
 Group:		Development/Other
 Requires:	%{name}-base = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
@@ -132,7 +133,7 @@ This package is used to build some library.
 
 %package manpages
 Summary:	Erlang man pages
-License:	MPL
+License:	Apache-2.0
 Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
@@ -143,7 +144,7 @@ the name of the module you want documentation on.
 
 %package dialyzer
 Summary:	Static analysis tool
-License:	MPL
+License:	Apache-2.0
 Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
@@ -154,7 +155,7 @@ Erlang modules or entire (sets of) applications.
 
 %package diameter
 Summary:	An implementation of the Diameter protocol as defined by RFC 3588
-License:	MPL
+License:	Apache-2.0
 Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
@@ -163,7 +164,7 @@ An implementation of the Diameter protocol as defined by RFC 3588.
 
 %package edoc
 Summary:	The Erlang program documentation generator
-License:	MPL
+License:	Apache-2.0
 Requires:	%{name}-base = %{version}-%{release}
 Requires:	erlang-syntax_tools
 Requires:	erlang-xmerl
@@ -174,7 +175,7 @@ This module provides the main user interface to EDoc.
 
 %package eldap
 Summary:	The Erlang LDAP library 
-License:	MPL
+License:	Apache-2.0
 Requires:	%{name}-asn1 = %{version}-%{release}
 Requires:	%{name}-base = %{version}-%{release}
 Requires:	%{name}-ssl = %{version}-%{release}
@@ -197,7 +198,7 @@ This module provides Erlang support to Emacs.
 %if %build_java
 %package jinterface
 Summary:	Low level interface to Java
-License:	MPL
+License:	Apache-2.0
 Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
@@ -210,7 +211,7 @@ Erl_Interface library.
 
 %package asn1
 Summary:	Provides support for Abstract Syntax Notation One
-License:	MPL
+License:	Apache-2.0
 Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
@@ -220,7 +221,7 @@ ASN.1.
 
 %package common_test
 Summary:	Portable framework for automatic testing
-License:	MPL
+License:	Apache-2.0
 Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
@@ -229,7 +230,7 @@ A portable Erlang framework for automatic testing.
 
 %package compiler
 Summary:	Byte code compiler for Erlang which produces highly compact code
-License:	MPL
+License:	Apache-2.0
 Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
@@ -239,7 +240,7 @@ byte-code is executed by the Erlang emulator.
 
 %package crypto
 Summary:	Cryptographical support
-License:	MPL
+License:	Apache-2.0
 Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
@@ -248,7 +249,7 @@ Cryptographical support for erlang.
 
 %package debugger
 Summary:	Debugger for debugging and testing of Erlang programs
-License:	MPL
+License:	Apache-2.0
 Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
@@ -259,7 +260,7 @@ stepped and variable values can be displayed and changed.
 
 %package erl_interface
 Summary:	Low level interface to C
-License:	MPL
+License:	Apache-2.0
 Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
@@ -268,7 +269,7 @@ Low level interface to C for erlang.
 
 %package et
 Summary:	Event Tracer
-License:	MPL
+License:	Apache-2.0
 Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
@@ -278,7 +279,7 @@ provides tools for collection and graphical viewing of trace data.
 
 %package eunit
 Summary:	Erlang support for unit testing
-License:	MPL
+License:	Apache-2.0
 Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
@@ -287,7 +288,7 @@ Erlang support for unit testing.
 
 %package inets
 Summary:	Set of services such as a Web server and a ftp client etc
-License:	MPL
+License:	Apache-2.0
 Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
@@ -299,7 +300,7 @@ a Web server.
 
 %package megaco
 Summary:	Framework for building applications on top of the Megaco/H.248 protocol
-License:	MPL
+License:	Apache-2.0
 Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
@@ -309,7 +310,7 @@ multimedia gateway, enabling separation of call control from media conversion.
 
 %package mnesia
 Summary:	Heavy duty real-time distributed database
-License:	MPL
+License:	Apache-2.0
 Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
@@ -320,7 +321,7 @@ continuous operation and exhibit soft real-time properties.
 
 %package observer
 Summary:	Observer, tools for tracing and investigation of distributed systems
-License:	MPL
+License:	Apache-2.0
 Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
@@ -329,9 +330,9 @@ The OBSERVER application contains tools for tracing and investigation of
 distributed systems.
 
 %package odbc
-Summary: 	Interface to relational SQL-databases built on ODBC
-License: 	MPL
-Requires: 	%{name}-base = %{version}-%{release}
+Summary:	Interface to relational SQL-databases built on ODBC
+License:	Apache-2.0
+Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
 %description odbc
@@ -340,7 +341,7 @@ on ODBC (Open Database.)
 
 %package os_mon
 Summary:	Monitor which allows inspection of the underlying operating system
-License:	MPL
+License:	Apache-2.0
 Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
@@ -350,7 +351,7 @@ usage etc.
 
 %package parsetools
 Summary:	Set of parsing and lexical analysis tools
-License:	MPL
+License:	Apache-2.0
 Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
@@ -362,7 +363,7 @@ a parser as output.
 
 %package public_key
 Summary:	Erlang API to public key infrastructure
-License:	MPL
+License:	Apache-2.0
 Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
@@ -371,7 +372,7 @@ Erlang API to public key infrastructure.
 
 %package reltool
 Summary:	A release management tool for Erlang
-License:	MPL
+License:	Apache-2.0
 Group:		Development/Other
 Requires:	%{name}-base = %{version}-%{release}
 
@@ -384,7 +385,7 @@ generation of customized target systems.
 
 %package runtime_tools
 Summary:	Runtime tools, tools to include in a production system
-License:	MPL
+License:	Apache-2.0
 Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
@@ -393,7 +394,7 @@ Runtime tools, tools to include in a production system.
 
 %package snmp
 Summary:	Simple Network Management Protocol (SNMP) support
-License:	MPL
+License:	Apache-2.0
 Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
@@ -403,7 +404,7 @@ a MIB compiler and facilities for implementing SNMP MIBs etc.
 
 %package ssh
 Summary:	Secure Shell application with ssh and sftp support
-License:	MPL
+License:	Apache-2.0
 Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
@@ -412,7 +413,7 @@ Secure Shell application with ssh and sftp support.
 
 %package ssl
 Summary:	Interface to UNIX BSD sockets with Secure Sockets Layer
-License:	MPL
+License:	Apache-2.0
 Requires:	%{name}-base = %{version}-%{release}
 Group:		Development/Other
 
@@ -421,7 +422,7 @@ The SSL application provides secure communication over sockets.
 
 %package syntax_tools
 Summary:	Set of modules for working with Erlang source code
-License:	MPL
+License:	Apache-2.0
 Group:		Development/Other
 Requires:	%{name}-base = %{version}-%{release}
 
@@ -433,7 +434,7 @@ comments. Now includes `erl_tidy': automatic code tidying and checking.
 
 %package tools
 Summary:	Set of programming tools including a coverage analyzer etc
-License:	MPL
+License:	Apache-2.0
 Group:		Development/Other
 Requires:	%{name}-base = %{version}-%{release}
 
@@ -443,7 +444,7 @@ useful when developing Erlang programs.
 
 %package typer
 Summary:	Type annotator of Erlang code
-License:	MPL
+License:	Apache-2.0
 Group:		Development/Other
 Requires:	%{name}-base = %{version}-%{release}
 
@@ -452,7 +453,7 @@ A type annotator of Erlang code.
 
 %package wx
 Summary:	Graphic system for Erlang
-License:	MPL
+License:	Apache-2.0
 Group:		Development/Other
 Requires:	%{name}-base = %{version}-%{release}
 
@@ -462,7 +463,7 @@ for Erlang.
 
 %package xmerl
 Summary:	XML processing tools
-License:	MPL
+License:	Apache-2.0
 Group:		Development/Other
 Requires:	%{name}-base = %{version}-%{release}
 
@@ -587,9 +588,9 @@ rm -rf %{buildroot}%{_mandir}/man3/zlib.3.*
 
 %files devel
 %dir %{_libdir}/%{name}/%{_includedir}
-%dir %{_libdir}/%{name}/%{_prefix}/lib
+%dir %{_libdir}/%{name}/%{_prefix}/%{erl_usrdn}
 %{_libdir}/%{name}/%{_includedir}/*
-%{_libdir}/%{name}/%{_prefix}/lib/*
+%{_libdir}/%{name}/%{_prefix}/%{erl_usrdn}/*
 
 %files asn1
 %{erlang_libdir}/asn1-*
