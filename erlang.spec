@@ -31,7 +31,9 @@ BuildRequires:	unixODBC-devel
 BuildRequires:	tcl-devel
 BuildRequires:	tk-devel
 %if %build_java
-BuildRequires:	java-rpmbuild
+# java-rpmbuild is gone. jdk-current is the distro JDK (OpenJDK 27).
+# jinterface's jar --date needs OpenJDK 17 or newer.
+BuildRequires:	jdk-current
 %endif
 BuildRequires:	flex
 BuildRequires:	bison
