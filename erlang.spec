@@ -508,10 +508,13 @@ ERL_TOP=`pwd`; export ERL_TOP
 %makeinstall_std INSTALL_PREFIX=%{buildroot}
 
 # clean up
-find %{buildroot}%{_libdir}/erlang -perm 0775 | xargs chmod 755
-find %{buildroot}%{_libdir}/erlang -name Makefile | xargs chmod 644
-find %{buildroot}%{_libdir}/erlang -name \*.bat | xargs rm -f
-find %{buildroot}%{_libdir}/erlang -name index.txt.old | xargs rm -f
+# xargs without -r runs the command when find prints nothing, and that
+# fails the install. OTP 29 has no mode-0775 files, Makefiles, .bat
+# files, or index.txt.old.
+find %{buildroot}%{_libdir}/erlang -perm 0775 | xargs -r chmod 755
+find %{buildroot}%{_libdir}/erlang -name Makefile | xargs -r chmod 644
+find %{buildroot}%{_libdir}/erlang -name \*.bat | xargs -r rm -f
+find %{buildroot}%{_libdir}/erlang -name index.txt.old | xargs -r rm -f
 
 # doc
 mkdir -p erlang_doc
@@ -577,7 +580,6 @@ rm -rf %{buildroot}%{_mandir}/man3/zlib.3.*
 %{_libdir}/erlang/bin/no_dot_erlang.boot
 %{_libdir}/erlang/erts-*
 %{_libdir}/erlang/misc/format_man_pages
-%{_libdir}/erlang/misc/makewhatis
 %{_libdir}/erlang/releases
 %{_libdir}/erlang/bin/run_erl
 %{_libdir}/erlang/bin/start
